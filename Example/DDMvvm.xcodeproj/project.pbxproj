@@ -41,6 +41,10 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		700403822304176800031345 /* NonGenericTablePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700403812304176800031345 /* NonGenericTablePage.swift */; };
+		700403842304193C00031345 /* NonGenericTablePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700403832304193C00031345 /* NonGenericTablePage.xib */; };
+		70040386230503A800031345 /* NonGenericSectionListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70040385230503A800031345 /* NonGenericSectionListPage.swift */; };
+		70040388230503B400031345 /* NonGenericSectionListPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 70040387230503B400031345 /* NonGenericSectionListPage.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +97,10 @@
 		607FACE51AFB9204008FA782 /* DDMvvm_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DDMvvm_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		700403812304176800031345 /* NonGenericTablePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonGenericTablePage.swift; sourceTree = "<group>"; };
+		700403832304193C00031345 /* NonGenericTablePage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonGenericTablePage.xib; sourceTree = "<group>"; };
+		70040385230503A800031345 /* NonGenericSectionListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonGenericSectionListPage.swift; sourceTree = "<group>"; };
+		70040387230503B400031345 /* NonGenericSectionListPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NonGenericSectionListPage.xib; sourceTree = "<group>"; };
 		8073E045A97C23024F36524B /* Pods-DDMvvm_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DDMvvm_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-DDMvvm_Example/Pods-DDMvvm_Example.release.xcconfig"; sourceTree = "<group>"; };
 		BFB08EE7E253BF60C14E5F73 /* Pods_DDMvvm_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DDMvvm_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE3853135D3C2B785F6422D3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -182,6 +190,7 @@
 		4EE544922161CE90000E7B15 /* MvvmExamples */ = {
 			isa = PBXGroup;
 			children = (
+				700403802304174900031345 /* NonGeneric */,
 				4E2AD479216707E20016BFCF /* CollectionPageExamples */,
 				4E48B73421657A4C00EF8CED /* TablePageExamples */,
 				4EEA34712163CFF800033616 /* FlickrSearch */,
@@ -316,6 +325,17 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		700403802304174900031345 /* NonGeneric */ = {
+			isa = PBXGroup;
+			children = (
+				700403812304176800031345 /* NonGenericTablePage.swift */,
+				700403832304193C00031345 /* NonGenericTablePage.xib */,
+				70040385230503A800031345 /* NonGenericSectionListPage.swift */,
+				70040387230503B400031345 /* NonGenericSectionListPage.xib */,
+			);
+			path = NonGeneric;
+			sourceTree = "<group>";
+		};
 		B7830FDE80F21ED50241C79F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,6 +436,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				70040388230503B400031345 /* NonGenericSectionListPage.xib in Resources */,
+				700403842304193C00031345 /* NonGenericTablePage.xib in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -513,6 +535,8 @@
 				4ED4076B2162016200987322 /* DataBindingExamplePage.swift in Sources */,
 				4E2AD48A2167184D0016BFCF /* ContactModel.swift in Sources */,
 				4E2AD47F21670C740016BFCF /* SectionCollectionPage.swift in Sources */,
+				70040386230503A800031345 /* NonGenericSectionListPage.swift in Sources */,
+				700403822304176800031345 /* NonGenericTablePage.swift in Sources */,
 				4EE5449D2161CF7B000E7B15 /* MenuModel.swift in Sources */,
 				4ED407712162184600987322 /* CustomControlExamplePage.swift in Sources */,
 				4EE544982161CEFF000E7B15 /* ExampleMenuPage.swift in Sources */,

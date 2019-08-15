@@ -9,6 +9,15 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+public protocol RxCollection {
+    var collectionChanged: Observable<ChangeSet> { get }
+    var count: Int { get }
+    func removeAll(animated: Bool?)
+    func element(atIndexPath: IndexPath) -> Any?
+    func element(atSection: Int, row: Int) -> Any?
+    func countElements(at section: Int) -> Int
+}
+
 public enum ChangeSet {
     case deleteSection(section: Int, animated: Bool)
     case insertSection(section: Int, animated: Bool)
@@ -129,7 +138,14 @@ public class SectionList<T> where T: Equatable {
     }
 }
 
-public class ReactiveCollection<T> where T: Equatable {
+public class ReactiveCollection<T>: RxCollection where T: Equatable {
+    public func element(atIndexPath: IndexPath) -> Any? {
+        return self[atIndexPath.row, atIndexPath.section]
+    }
+    
+    public func element(atSection: Int, row: Int) -> Any? {
+        return self[row, atSection]
+    }    
     
     public var animated: Bool = true
     

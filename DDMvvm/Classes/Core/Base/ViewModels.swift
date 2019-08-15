@@ -18,8 +18,12 @@ extension Reactive where Base: IGenericViewModel {
     }
 }
 
+open class BaseViewModel: NSObject {
+    
+}
+
 /// A master based ViewModel for all
-open class ViewModel<M>: NSObject, IViewModel {
+open class ViewModel<M>: BaseViewModel, IViewModel {
     
     public typealias ModelElement = M
     

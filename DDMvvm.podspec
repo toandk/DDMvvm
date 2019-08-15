@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DDMvvm'
-  s.version          = '1.4.8'
+  s.version          = '1.5.0'
   s.summary          = 'A MVVM library for iOS Swift.'
 
 # This description is used to generate tags and improve search results.
@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
 A MVVM library for iOS Swift, including interfaces for View, ViewModel and Model, DI and Services
                        DESC
 
-  s.homepage         = 'https://github.com/duyduong/DDMvvm.git'
+  s.homepage         = 'https://github.com/toandk/DDMvvm.git'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Dao Duy Duong' => 'dduy.duong@gmail.com' }
-  s.source           = { :git => 'https://github.com/duyduong/DDMvvm.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/toandk/DDMvvm.git', :tag => s.version.to_s }
   s.swift_version    = '4.2'
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 

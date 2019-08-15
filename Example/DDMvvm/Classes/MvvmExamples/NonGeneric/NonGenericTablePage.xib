@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NonGenericTablePage" customModule="DDMvvm_Example" customModuleProvider="target">
+            <connections>
+                <outlet property="addButton" destination="fn9-Ut-hAv" id="pUN-6F-ygj"/>
+                <outlet property="tableView" destination="gFM-HH-zeZ" id="geQ-PQ-EPD"/>
+                <outlet property="view" destination="iN0-l3-epB" id="AK2-hy-4kV"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gFM-HH-zeZ">
+                    <rect key="frame" x="0.0" y="128" width="414" height="734"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fn9-Ut-hAv">
+                    <rect key="frame" x="185" y="64" width="44" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="e9G-Bg-kR6"/>
+                        <constraint firstAttribute="width" constant="44" id="vg6-kH-dik"/>
+                    </constraints>
+                    <state key="normal" title="Add"/>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="gFM-HH-zeZ" firstAttribute="top" secondItem="fn9-Ut-hAv" secondAttribute="bottom" constant="20" id="8uP-RN-e4G"/>
+                <constraint firstItem="fn9-Ut-hAv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="eMg-1T-66S"/>
+                <constraint firstItem="fn9-Ut-hAv" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="rSI-uV-x0l"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gFM-HH-zeZ" secondAttribute="trailing" id="rmf-uW-mAo"/>
+                <constraint firstItem="gFM-HH-zeZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sgE-ry-kRo"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="gFM-HH-zeZ" secondAttribute="bottom" id="zPl-oP-iQj"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+        </view>
+    </objects>
+</document>

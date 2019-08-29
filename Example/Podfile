@@ -2,10 +2,10 @@ use_frameworks!
 
 platform :ios, '9.0'
 
-target 'DDMvvm_Example' do
-  pod 'DDMvvm', :path => '../'
+target 'DTMvvm_Example' do
+  pod 'DTMvvm', :path => '../'
 
-  target 'DDMvvm_Tests' do
+  target 'DTMvvm_Tests' do
     inherit! :search_paths
 
     

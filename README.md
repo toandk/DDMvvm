@@ -1,11 +1,13 @@
-# DDMvvm
+# DTMvvm
 
-[![CI Status](https://img.shields.io/travis/duyduong/DDMvvm.svg?style=flat)](https://travis-ci.org/duyduong/DDMvvm)
-[![Version](https://img.shields.io/cocoapods/v/DDMvvm.svg?style=flat)](https://cocoapods.org/pods/DDMvvm)
-[![License](https://img.shields.io/cocoapods/l/DDMvvm.svg?style=flat)](https://cocoapods.org/pods/DDMvvm)
-[![Platform](https://img.shields.io/cocoapods/p/DDMvvm.svg?style=flat)](https://cocoapods.org/pods/DDMvvm)
+This project is inherited from [https://github.com/duyduong/DTMvvm](https://github.com/duyduong/DTMvvm) 
 
-DDMvvm is a library for who wants to start writing iOS application using MVVM (Model-View-ViewModel), written in Swift.
+[![CI Status](https://img.shields.io/travis/toandk/DTMvvm.svg?style=flat)](https://travis-ci.org/toandk/DTMvvm)
+[![Version](https://img.shields.io/cocoapods/v/DTMvvm.svg?style=flat)](https://cocoapods.org/pods/DTMvvm)
+[![License](https://img.shields.io/cocoapods/l/DTMvvm.svg?style=flat)](https://cocoapods.org/pods/DTMvvm)
+[![Platform](https://img.shields.io/cocoapods/p/DTMvvm.svg?style=flat)](https://cocoapods.org/pods/DTMvvm)
+
+DTMvvm is a library for who wants to start writing iOS application using MVVM (Model-View-ViewModel), written in Swift.
 
 - [Features](#features)
 - [Requirements](#requirements)
@@ -43,7 +45,7 @@ The library heavily depends on [RxSwift](https://github.com/ReactiveX/RxSwift) f
 $ gem install cocoapods
 ```
 
-To integrate DDMvvm into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To integrate DTMvvm into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
@@ -51,7 +53,7 @@ platform :ios, '9.0'
 use_frameworks!
 
 target '<Your Target Name>' do
-    pod 'DDMvvm'
+    pod 'DTMvvm'
 end
 ```
 
@@ -135,4 +137,4 @@ The library also supports for page transitions, including pages inside a navigat
 
 ## License
 
-DDMvvm is available under the MIT license. See the LICENSE file for more info.
+DTMvvm is available under the MIT license. See the LICENSE file for more info.

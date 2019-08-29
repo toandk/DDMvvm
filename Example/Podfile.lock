@@ -5,7 +5,7 @@ PODS:
   - Alamofire (4.8.2)
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
-  - DDMvvm (1.5.0):
+  - DTMvvm (1.5.0):
     - Action
     - Alamofire
     - AlamofireImage
@@ -30,7 +30,7 @@ PODS:
   - RxSwift (5.0.0)
 
 DEPENDENCIES:
-  - DDMvvm (from `../`)
+  - DTMvvm (from `../`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -46,14 +46,14 @@ SPEC REPOS:
     - RxSwift
 
 EXTERNAL SOURCES:
-  DDMvvm:
+  DTMvvm:
     :path: "../"
 
 SPEC CHECKSUMS:
   Action: 0d14986aad0f1330aa27ce65d0cdeaacbb63d91c
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
-  DDMvvm: a09926aa97c73b717201c0a91b6ef88f3401e556
+  DTMvvm: bd58255e6d8b0d5297b8c22366f7c42d30ee17cc
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
@@ -62,6 +62,6 @@ SPEC CHECKSUMS:
   RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
   RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
 
-PODFILE CHECKSUM: 7e8a9c8b906b48ef84a6411ee8717c2863c6b2e3
+PODFILE CHECKSUM: 4c9730cbf6f6da43c59e46cda18b2e02920b947d
 
 COCOAPODS: 1.7.5

@@ -47,4 +47,5 @@ A MVVM library for iOS Swift, including interfaces for View, ViewModel and Model
   s.dependency 'AlamofireImage'
   s.dependency 'ObjectMapper'
   s.dependency 'PureLayout'
+  s.dependency 'Moya'
 end

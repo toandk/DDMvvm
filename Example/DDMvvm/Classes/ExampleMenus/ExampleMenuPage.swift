@@ -209,8 +209,9 @@ class MvvmMenuPageViewModel: ExampleMenuPageViewModel {
              For real project, this should be call on AppDelegate. For now, as an example project,
              I may want to use different base url for different examples
              */
-            DependencyManager.shared.registerService(Factory<IJsonService> {
-                JsonService(baseUrl: "https://api.flickr.com/services/rest")
+            
+            DependencyManager.shared.registerService(Factory<FlickrService> {
+                FlickrService()
             })
             
             let vm = FlickrSearchPageViewModel(model: cellViewModel.model)

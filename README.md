@@ -34,6 +34,7 @@ The library heavily depends on [RxSwift](https://github.com/ReactiveX/RxSwift) f
 - [AlamofireImage](https://github.com/Alamofire/AlamofireImage)
 - [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper)
 - [PureLayout](https://github.com/PureLayout/PureLayout)
+- [Moya](https://github.com/Moya/Moya)
 
 ## Installation
 [CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:

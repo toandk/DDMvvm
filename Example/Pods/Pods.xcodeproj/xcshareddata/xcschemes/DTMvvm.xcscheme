@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1020"
+   LastUpgradeVersion = "1100"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A05563A96A71F881A9ABD9E33BC3E88C"
-               BuildableName = "DDMvvm.framework"
-               BlueprintName = "DDMvvm"
+               BlueprintIdentifier = "C8DCB967A7CC1C04A9AAF9147966B479"
+               BuildableName = "DTMvvm.framework"
+               BlueprintName = "DTMvvm"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A05563A96A71F881A9ABD9E33BC3E88C"
-            BuildableName = "DDMvvm.framework"
-            BlueprintName = "DDMvvm"
+            BlueprintIdentifier = "C8DCB967A7CC1C04A9AAF9147966B479"
+            BuildableName = "DTMvvm.framework"
+            BlueprintName = "DTMvvm"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

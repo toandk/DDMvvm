@@ -33,7 +33,7 @@ DEPENDENCIES:
   - DTMvvm (from `../`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  https://github.com/CocoaPods/Specs.git:
     - Action
     - Alamofire
     - AlamofireImage
@@ -64,4 +64,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4c9730cbf6f6da43c59e46cda18b2e02920b947d
 
-COCOAPODS: 1.7.5
+COCOAPODS: 1.8.4

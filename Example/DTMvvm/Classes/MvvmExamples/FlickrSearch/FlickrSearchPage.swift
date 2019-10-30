@@ -90,7 +90,7 @@ class FlickrSearchPage: CollectionPage<FlickrSearchPageViewModel> {
         }) => disposeBag
         
         // call out load more when reach to end of collection view
-        collectionView.rx.endReach.subscribe(onNext: {
+        collectionView.rx.endReach(30).subscribe(onNext: {
             viewModel.loadMoreAction.execute(())
         }) => disposeBag
     }

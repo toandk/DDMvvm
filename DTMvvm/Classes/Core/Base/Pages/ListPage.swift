@@ -48,9 +48,8 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
         tableView.removeFromSuperview()
     }
     
+    /// Every time the viewModel changed, this method will be called again, so make sure to call super for ListPage to work
     open override func bindViewAndViewModel() {
-        tableView.reloadData()
-        
         tableView.rx.itemSelected.asObservable().subscribe(onNext: onItemSelected) => disposeBag
         viewModel?.itemsSource.collectionChanged
             .observeOn(Scheduler.shared.mainScheduler)
@@ -75,36 +74,61 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
     
     private func onDataSourceChanged(_ changeSet: ChangeSet) {
         if changeSet.animated {
-            tableView.beginUpdates()
-            
             switch changeSet {
-            case .insertSection(let section, _):
-                tableView.insertSections([section], with: .top)
-                
-            case .deleteSection(let section, _):
-                if section < 0 {
-                    if tableView.numberOfSections > 0 {
-                        let sections = IndexSet(0...tableView.numberOfSections - 1)
-                        tableView.deleteSections(sections, with: .bottom)
+            case let data as ModifySection:
+                switch data.type {
+                case .insert:
+                    tableView.insertSections([data.section], with: .top)
+                    
+                case .delete:
+                    if data.section < 0 {
+                        if tableView.numberOfSections > 0 {
+                            let sections = IndexSet(0...tableView.numberOfSections - 1)
+                            tableView.deleteSections(sections, with: .bottom)
+                        } else {
+                            tableView.reloadData()
+                        }
+                    } else {
+                        tableView.deleteSections([data.section], with: .bottom)
                     }
-                } else {
-                    tableView.deleteSections([section], with: .bottom)
+                    
+                default:
+                    if data.section < 0 {
+                        if tableView.numberOfSections > 0 {
+                            let sections = IndexSet(0...tableView.numberOfSections - 1)
+                            tableView.reloadSections(sections, with: .automatic)
+                        } else {
+                            tableView.reloadData()
+                        }
+                    } else {
+                        tableView.reloadSections(IndexSet([data.section]), with: .automatic)
+                    }
+                }
+            case let data as ModifyElements:
+                switch data.type {
+                case .insert:
+                    tableView.insertRows(at: data.indexPaths, with: .top)
+                    
+                case .delete:
+                    tableView.deleteRows(at: data.indexPaths, with: .bottom)
+                    
+                default:
+                    tableView.reloadRows(at: data.indexPaths, with: .automatic)
                 }
                 
-            case .insertElements(let indexPaths, _):
-                tableView.insertRows(at: indexPaths, with: .top)
+            case let data as MoveElements:
+                tableView.beginUpdates()
                 
-            case .deleteElements(let indexPaths, _):
-                tableView.deleteRows(at: indexPaths, with: .bottom)
-                
-            case .moveElements(let fromIndexPaths, let toIndexPaths, _):
-                for (i, fromIndexPath) in fromIndexPaths.enumerated() {
-                    let toIndexPath = toIndexPaths[i]
+                for (i, fromIndexPath) in data.fromIndexPaths.enumerated() {
+                    let toIndexPath = data.toIndexPaths[i]
                     tableView.moveRow(at: fromIndexPath, to: toIndexPath)
                 }
+                
+                tableView.endUpdates()
+                
+            default:
+                tableView.reloadData()
             }
-            
-            tableView.endUpdates()
         } else {
             tableView.reloadData()
         }
@@ -142,7 +166,7 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
         let cellViewModel = viewModel.itemsSource[indexPath.row, indexPath.section]
         
         // set index for each cell
-        (cellViewModel as? IndexableCellViewModel)?.setIndexPath(indexPath)
+        (cellViewModel as? IIndexable)?.indexPath = indexPath
         
         let identifier = cellIdentifier(cellViewModel)
         let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)

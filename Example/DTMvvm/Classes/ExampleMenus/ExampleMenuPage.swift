@@ -51,7 +51,7 @@ class ExampleMenuPageViewModel: ListViewModel<MenuModel, ExampleMenuCellViewMode
     
     override func react() {
         let models = getMenuModels()
-        itemsSource.append(models.toCellViewModels())
+        itemsSource.reset([models.toCellViewModels()])
         
         // set page title
         rxPageTitle.accept(model?.title ?? "")
@@ -209,7 +209,6 @@ class MvvmMenuPageViewModel: ExampleMenuPageViewModel {
              For real project, this should be call on AppDelegate. For now, as an example project,
              I may want to use different base url for different examples
              */
-            
             DependencyManager.shared.registerService(Factory<FlickrService> {
                 FlickrService()
             })

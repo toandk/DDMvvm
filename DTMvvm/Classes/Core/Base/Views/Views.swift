@@ -21,10 +21,10 @@ open class View<VM: IGenericViewModel>: UIView, IView {
         get { return _viewModel }
         set {
             if newValue != _viewModel {
-                cleanUp()
+                disposeBag = DisposeBag()
                 
                 _viewModel = newValue
-                updateAfterViewModelChanged()
+                viewModelChanged()
             }
         }
     }
@@ -51,37 +51,27 @@ open class View<VM: IGenericViewModel>: UIView, IView {
         setup()
     }
     
+    deinit { destroy() }
+    
     func setup() {
         backgroundColor = .clear
         
         initialize()
-        updateAfterViewModelChanged()
-    }
-    
-    private func updateAfterViewModelChanged() {
-        bindViewAndViewModel()
-        viewModel?.react()
-        
         viewModelChanged()
     }
     
-    open func viewModelChanged() { }
-    
-    open func initialize() {}
-    open func bindViewAndViewModel() {}
-    
-    deinit {
-        destroy()
+    private func viewModelChanged() {
+        bindViewAndViewModel()
+        (_viewModel as? IReactable)?.reactIfNeeded()
     }
     
     open func destroy() {
-        cleanUp()
-    }
-    
-    private func cleanUp() {
         disposeBag = DisposeBag()
         viewModel?.destroy()
     }
+    
+    open func initialize() {}
+    open func bindViewAndViewModel() {}
 }
 
 /// Master based cell for CollectionPage
@@ -100,10 +90,10 @@ open class CollectionCell<VM: IGenericViewModel>: UICollectionViewCell, IView {
         get { return _viewModel }
         set {
             if newValue != _viewModel {
-                cleanUp()
+                disposeBag = DisposeBag()
                 
                 _viewModel = newValue
-                updateAfterViewModelChanged()
+                viewModelChanged()
             }
         }
     }
@@ -123,33 +113,24 @@ open class CollectionCell<VM: IGenericViewModel>: UICollectionViewCell, IView {
         setup()
     }
     
+    deinit { destroy() }
+    
     private func setup() {
         backgroundColor = .clear
         initialize()
     }
     
-    private func updateAfterViewModelChanged() {
+    private func viewModelChanged() {
         bindViewAndViewModel()
-        viewModel?.react()
-        
-        viewModelChanged()
+        (_viewModel as? IReactable)?.reactIfNeeded()
     }
     
     open override func prepareForReuse() {
-        disposeBag = DisposeBag()
-    }
-    
-    open func viewModelChanged() { }
-    
-    deinit {
-        destroy()
+        super.prepareForReuse()
+        _viewModel = nil
     }
     
     open func destroy() {
-        cleanUp()
-    }
-    
-    private func cleanUp() {
         disposeBag = DisposeBag()
         viewModel?.destroy()
     }
@@ -174,10 +155,10 @@ open class TableCell<VM: IGenericViewModel>: UITableViewCell, IView {
         get { return _viewModel }
         set {
             if newValue != _viewModel {
-                cleanUp()
+                disposeBag = DisposeBag()
                 
                 _viewModel = newValue
-                updateAfterViewModelChanged()
+                viewModelChanged()
             }
         }
     }
@@ -197,6 +178,8 @@ open class TableCell<VM: IGenericViewModel>: UITableViewCell, IView {
         setup()
     }
     
+    deinit { destroy() }
+    
     private func setup() {
         backgroundColor = .clear
         separatorInset = .zero
@@ -206,28 +189,17 @@ open class TableCell<VM: IGenericViewModel>: UITableViewCell, IView {
         initialize()
     }
     
-    private func updateAfterViewModelChanged() {
+    private func viewModelChanged() {
         bindViewAndViewModel()
-        viewModel?.react()
-        
-        viewModelChanged()
+        (_viewModel as? IReactable)?.reactIfNeeded()
     }
     
     open override func prepareForReuse() {
-        disposeBag = DisposeBag()
-    }
-    
-    open func viewModelChanged() { }
-    
-    deinit {
-        destroy()
+        super.prepareForReuse()
+        _viewModel = nil
     }
     
     open func destroy() {
-        cleanUp()
-    }
-    
-    private func cleanUp() {
         disposeBag = DisposeBag()
         viewModel?.destroy()
     }

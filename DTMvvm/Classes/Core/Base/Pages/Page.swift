@@ -37,10 +37,10 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
         get { return _viewModel }
         set {
             if _viewModel != newValue {
-                cleanUp()
+                disposeBag = DisposeBag()
                 
                 _viewModel = newValue
-                updateAfterViewModelChanged()
+                viewModelChanged()
             }
         }
     }
@@ -95,7 +95,7 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
         self.localHud = localHud
         
         initialize()
-        updateAfterViewModelChanged()
+        viewModelChanged()
     }
     
     open override func viewWillAppear(_ animated: Bool) {
@@ -116,6 +116,10 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
     open override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         viewModel?.rxViewState.accept(.didDisappear)
+        
+        if isMovingFromParent {
+            destroy()
+        }
     }
     
     /**
@@ -163,7 +167,9 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
      Subclasses override this method to remove all things related to `DisposeBag`.
      */
     open func destroy() {
-        cleanUp()
+        disposeBag = DisposeBag()
+        hudBag = DisposeBag()
+        viewModel?.destroy()
     }
     
     /**
@@ -171,37 +177,24 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
      
      By default, this will call pop action in navigation or dismiss in modal
      */
-    open func onBack() {
+    @objc open func onBack() {
         navigationService.pop()
-    }
-    
-    /**
-     Subclasses override this method to do more action when `viewModel` changed.
-     */
-    open func viewModelChanged() { }
-    
-    private func cleanUp() {
-        disposeBag = DisposeBag()
-        hudBag = DisposeBag()
-        viewModel?.destroy()
     }
     
     private func bindLocalHud() {
         hudBag = DisposeBag()
         
         if let viewModel = viewModel, let localHud = localHud {
-            let shared = viewModel.rxShowLocalHud.distinctUntilChanged().share()
+            let shared = viewModel.rxShowLocalHud.distinctUntilChanged()
             shared ~> localHud.rx.show => hudBag
             shared.subscribe(onNext: localHudToggled) => hudBag
         }
     }
     
-    private func updateAfterViewModelChanged() {
+    private func viewModelChanged() {
         bindLocalHud()
         bindViewAndViewModel()
-        viewModel?.react()
-        
-        viewModelChanged()
+        (_viewModel as? IReactable)?.reactIfNeeded()
     }
 }
 

@@ -74,7 +74,6 @@ public protocol IView: IAnyView, IDestroyable {
     
     func initialize()
     func bindViewAndViewModel()
-    func viewModelChanged()
 }
 
 // MARK: - Viewmodel protocols
@@ -87,18 +86,12 @@ public protocol IGenericViewModel: IDestroyable, Equatable {
     var model: ModelElement? { get set }
     
     init(model: ModelElement?)
-    func react()
 }
 
 /// Base ViewModel type for Page (UIViewController), View (UIVIew)
 public protocol IViewModel: IGenericViewModel {
-    
     var rxViewState: BehaviorRelay<ViewState> { get }
-    
     var rxShowLocalHud: BehaviorRelay<Bool> { get }
-    
-    @available(*, deprecated, renamed: "rxShowLocalHud")
-    var rxShowInlineLoader: BehaviorRelay<Bool> { get }
     
     var navigationService: INavigationService { get }
 }

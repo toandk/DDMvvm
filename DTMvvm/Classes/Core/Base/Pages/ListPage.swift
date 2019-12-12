@@ -179,6 +179,8 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
     
     open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) { }
     
+    open func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) { }
+    
     open func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return false
     }

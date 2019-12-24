@@ -39,6 +39,10 @@ open class BasePage: UIViewController, ITransitionView {
     
     public let navigationService: INavigationService = DependencyManager.shared.getService()
     
+    deinit {
+        destroy()
+    }
+    
     open override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +50,13 @@ open class BasePage: UIViewController, ITransitionView {
         
         initialize()
         updateAfterViewModelChanged()
+    }
+    
+    open override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParent {
+            destroy()
+        }
     }
     
     /**

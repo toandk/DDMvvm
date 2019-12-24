@@ -60,6 +60,10 @@ open class ViewModel<M>: NSObject, IViewModel, IReactable {
         disposeBag = DisposeBag()
     }
     
+    deinit {
+        destroy()
+    }
+    
     /**
      Everytime model changed, this method will get called. Good place to update our viewModel
      */

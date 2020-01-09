@@ -104,6 +104,9 @@ public class SectionList<T> where T: Equatable {
     
     @discardableResult
     fileprivate func remove(at index: Int) -> T? {
+        guard index < innerSources.count, index >= 0 else {
+            return nil
+        }
         return innerSources.remove(at: index)
     }
     
@@ -266,7 +269,8 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     }
     
     @discardableResult
-    public func removeSection(at index: Int, animated: Bool? = nil) -> SectionList<T> {
+    public func removeSection(at index: Int, animated: Bool? = nil) -> SectionList<T>? {
+        guard index < innerSources.count, index >= 0 else { return nil }
         let element = innerSources.remove(at: index)
         rxInnerSources.accept(innerSources)
         publisher.onNext(ModifySection(type: .delete, section: index, animated: animated ?? self.animated))

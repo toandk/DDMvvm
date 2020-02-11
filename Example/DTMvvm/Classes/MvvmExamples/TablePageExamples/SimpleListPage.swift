@@ -19,12 +19,10 @@ class SimpleListPage: ListPage<SimpleListPageViewModel> {
         // If you want to layout tableView differently, then remove this line
         super.initialize()
         
-        enableBackButton = true
-        
         navigationItem.rightBarButtonItem = addBtn
         
-        tableView.estimatedRowHeight = 100
-        tableView.register(SimpleListPageCell.self, forCellReuseIdentifier: SimpleListPageCell.identifier)
+        tableView?.estimatedRowHeight = 100
+        tableView?.register(SimpleListPageCell.self, forCellReuseIdentifier: SimpleListPageCell.identifier)
     }
     
     override func bindViewAndViewModel() {

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 /// Based UIView that support ViewModel
-open class View<VM: IGenericViewModel>: UIView, IView {
+open class View<VM: IViewModel>: UIView, IView {
     
     public typealias ViewModelElement = VM
     
@@ -75,7 +75,7 @@ open class View<VM: IGenericViewModel>: UIView, IView {
 }
 
 /// Master based cell for CollectionPage
-open class CollectionCell<VM: IGenericViewModel>: UICollectionViewCell, IView {
+open class CollectionCell<VM: IViewModel>: UICollectionViewCell, IView {
     
     open class var identifier: String {
         return String(describing: self)
@@ -140,7 +140,7 @@ open class CollectionCell<VM: IGenericViewModel>: UICollectionViewCell, IView {
 }
 
 /// Master cell for ListPage
-open class TableCell<VM: IGenericViewModel>: UITableViewCell, IView {
+open class TableCell<VM: IViewModel>: UITableViewCell, IView {
     
     open class var identifier: String {
         return String(describing: self)
@@ -207,13 +207,3 @@ open class TableCell<VM: IGenericViewModel>: UITableViewCell, IView {
     open func initialize() {}
     open func bindViewAndViewModel() {}
 }
-
-
-
-
-
-
-
-
-
-

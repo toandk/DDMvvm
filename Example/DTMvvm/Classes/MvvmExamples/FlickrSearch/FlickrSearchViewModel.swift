@@ -85,6 +85,6 @@ class FlickrSearchPageViewModel: ListViewModel<MenuModel, FlickrImageCellViewMod
             finishedSearching = true
         }
         
-        return response.photos.toCellViewModels() as [FlickrImageCellViewModel]
+        return response.photos.map{ FlickrImageCellViewModel(model: $0) }
     }
 }

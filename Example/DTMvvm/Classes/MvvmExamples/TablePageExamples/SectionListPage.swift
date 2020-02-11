@@ -12,7 +12,7 @@ import Action
 import RxSwift
 import RxCocoa
 
-class SectionListPage: ListPage<SectionListPageViewModel> {
+class SectionListPage: ListPage<SectionListPageViewModel>, UITableViewDelegate {
     
     let addBtn = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
     let sortBtn = UIBarButtonItem(title: "Sort", style: .plain, target: nil, action: nil)
@@ -20,12 +20,11 @@ class SectionListPage: ListPage<SectionListPageViewModel> {
     override func initialize() {
         super.initialize()
         
-        enableBackButton = true
-        
         navigationItem.rightBarButtonItems = [addBtn, sortBtn]
         
-        tableView.register(SectionTextCell.self, forCellReuseIdentifier: SectionTextCell.identifier)
-        tableView.register(SectionImageCell.self, forCellReuseIdentifier: SectionImageCell.identifier)
+        tableView?.register(SectionTextCell.self, forCellReuseIdentifier: SectionTextCell.identifier)
+        tableView?.register(SectionImageCell.self, forCellReuseIdentifier: SectionImageCell.identifier)
+        tableView?.delegate = self
     }
     
     override func bindViewAndViewModel() {
@@ -46,7 +45,7 @@ class SectionListPage: ListPage<SectionListPageViewModel> {
         return SectionTextCell.identifier
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let vm = viewModel?.itemsSource[section].key as? SectionHeaderViewViewModel {
             let headerView = SectionHeaderView(viewModel: vm)
             return headerView
@@ -55,7 +54,7 @@ class SectionListPage: ListPage<SectionListPageViewModel> {
         return nil
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if let _ = viewModel?.itemsSource[section].key as? SectionHeaderViewViewModel {
             return 30
         }

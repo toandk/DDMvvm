@@ -1,19 +1,39 @@
 //
 //  Protocols.swift
-//  DTMvvm
 //
-//  Created by Dao Duy Duong on 9/26/18.
+//  Created by toandk on 12/25/19.
+//  Copyright © 2019 toandk. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 /// Destroyable type for handling dispose bag and destroy it
 public protocol IDestroyable: class {
     
     var disposeBag: DisposeBag? { get set }
     func destroy()
+}
+
+public protocol IAnyView: class {
+    
+    /**
+     Any value assign to this property will be delegate to its correct viewModel type
+     */
+    var anyViewModel: Any? { get set }
+}
+
+/// Base View type for the whole library
+public protocol IView: IAnyView, IDestroyable {
+    
+    associatedtype ViewModelElement
+    
+    var viewModel: ViewModelElement? { get set }
+    
+    func initialize()
+    func bindViewAndViewModel()
 }
 
 /// PopView type for Page to implement as a pop view
@@ -56,30 +76,28 @@ public protocol ITransitionView: class {
     var animatorDelegate: AnimatorDelegate? { get set }
 }
 
-/// AnyView type for helping assign any viewModel to any view
-public protocol IAnyView: class {
+public protocol IdentifyEquatable: Equatable, IdentifiableType {
     
-    /**
-     Any value assign to this property will be delegate to its correct viewModel type
-     */
-    var anyViewModel: Any? { get set }
 }
 
-/// Base View type for the whole library
-public protocol IView: IAnyView, IDestroyable {
-    
-    associatedtype ViewModelElement
-    
-    var viewModel: ViewModelElement? { get set }
-    
-    func initialize()
-    func bindViewAndViewModel()
+
+
+public protocol IModelType: IDestroyable {
+    func getModel() -> Any?
 }
 
-// MARK: - Viewmodel protocols
+public protocol IEquatableModelType: IModelType, IdentifyEquatable {
+    
+}
+
+public extension IEquatableModelType {
+    var identity: String {
+        return String(describing: self.getModel())
+    }
+}
 
 /// Base generic viewModel type, implement Destroyable and Equatable
-public protocol IGenericViewModel: IDestroyable, Equatable {
+public protocol IViewModel: IEquatableModelType where Identity == String {
     
     associatedtype ModelElement
     
@@ -88,39 +106,42 @@ public protocol IGenericViewModel: IDestroyable, Equatable {
     init(model: ModelElement?)
 }
 
-/// Base ViewModel type for Page (UIViewController), View (UIVIew)
-public protocol IViewModel: IGenericViewModel {
-    var rxViewState: BehaviorRelay<ViewState> { get }
-    var rxShowLocalHud: BehaviorRelay<Bool> { get }
-    
-    var navigationService: INavigationService { get }
+public extension IViewModel {
+    func getModel() -> Any? {
+        return model
+    }
 }
 
-public protocol IListViewModel: IViewModel {
+public protocol IListItemType {
+    var rxNSObjectSources: BehaviorRelay<[SectionList<NSObject>]> { get }
+    func getItem(at indexPath: IndexPath) -> Any?
+}
+
+public protocol IListViewModel: IViewModel, IListItemType {
     
-    associatedtype CellViewModelElement: IGenericViewModel
+    associatedtype CellViewModelElement: IViewModel
     
     var itemsSource: ReactiveCollection<CellViewModelElement> { get }
     var rxSelectedItem: BehaviorRelay<CellViewModelElement?> { get }
     var rxSelectedIndex: BehaviorRelay<IndexPath?> { get }
     
     func selectedItemDidChange(_ cellViewModel: CellViewModelElement)
+    
 }
 
+public extension IListViewModel {
+    var rxNSObjectSources: BehaviorRelay<[SectionList<NSObject>]> {
+        return itemsSource.rxNSObjectSources
+    }
+    
+    func getItem(at indexPath: IndexPath) -> Any? {
+        return itemsSource[indexPath.section][indexPath.row]
+    }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+extension NSObject: IdentifyEquatable {
+    public typealias Identity = String
+    public var identity: String {
+        return "\(self)"
+    }
+}

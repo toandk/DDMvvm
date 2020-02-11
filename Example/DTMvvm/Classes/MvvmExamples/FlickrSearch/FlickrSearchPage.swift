@@ -13,7 +13,7 @@ import Alamofire
 import Action
 import DTMvvm
 
-class FlickrSearchPage: CollectionPage<FlickrSearchPageViewModel> {
+class FlickrSearchPage: CollectionPage<FlickrSearchPageViewModel>, UICollectionViewDelegateFlowLayout {
     
     let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 400, height: 30))
     let indicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -25,8 +25,6 @@ class FlickrSearchPage: CollectionPage<FlickrSearchPageViewModel> {
 
     override func initialize() {
         super.initialize()
-        
-        enableBackButton = true
         
         // setup search bar
         indicatorView.hidesWhenStopped = true
@@ -48,6 +46,7 @@ class FlickrSearchPage: CollectionPage<FlickrSearchPageViewModel> {
         
         // setup collection view
         collectionView.register(FlickrImageCell.self, forCellWithReuseIdentifier: FlickrImageCell.identifier)
+        collectionView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -100,7 +99,7 @@ class FlickrSearchPage: CollectionPage<FlickrSearchPageViewModel> {
         return FlickrImageCell.identifier
     }
     
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let viewWidth = collectionView.frame.width
         
         let numOfCols: CGFloat
@@ -120,15 +119,15 @@ class FlickrSearchPage: CollectionPage<FlickrSearchPageViewModel> {
         return CGSize(width: width, height: 4 * width / 3)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return padding
     }
     
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return padding
     }
     
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .all(padding)
     }
 }

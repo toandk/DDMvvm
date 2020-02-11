@@ -21,12 +21,10 @@ class ContactListPage: ListPage<ContactListPageViewModel> {
         
         title = "Contact List"
         
-        enableBackButton = true
-        
         navigationItem.rightBarButtonItem = addBtn
         
-        tableView.estimatedRowHeight = 150
-        tableView.register(ContactCell.self, forCellReuseIdentifier: ContactCell.identifier)
+        tableView?.estimatedRowHeight = 150
+        tableView?.register(ContactCell.self, forCellReuseIdentifier: ContactCell.identifier)
     }
     
     override func bindViewAndViewModel() {
@@ -43,7 +41,7 @@ class ContactListPage: ListPage<ContactListPageViewModel> {
     
     override func selectedItemDidChange(_ cellViewModel: ContactCellViewModel) {
         if let indexPath = viewModel?.rxSelectedIndex.value {
-            tableView.deselectRow(at: indexPath, animated: true)
+            tableView?.deselectRow(at: indexPath, animated: true)
         }
     }
 }

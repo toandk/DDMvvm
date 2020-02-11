@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 protocol IReactable {
     var isReacted: Bool { get set }
@@ -16,7 +17,7 @@ protocol IReactable {
     func react()
 }
 
-extension Reactive where Base: IGenericViewModel {
+extension Reactive where Base: IViewModel {
     
     public typealias ModelElement = Base.ModelElement
     
@@ -44,10 +45,6 @@ open class ViewModel<M>: NSObject, IViewModel, IReactable {
     }
     
     public var disposeBag: DisposeBag? = DisposeBag()
-    
-    public let rxViewState = BehaviorRelay<ViewState>(value: .none)
-    public let rxShowLocalHud = BehaviorRelay(value: false)
-    
     public let navigationService: INavigationService = DependencyManager.shared.getService()
     
     var isReacted = false
@@ -88,7 +85,7 @@ open class ViewModel<M>: NSObject, IViewModel, IReactable {
  The idea for ListViewModel is that it will contain a list of CellViewModels
  By using this list, ListPage will render the cell and assign ViewModel to it respectively
  */
-open class ListViewModel<M, CVM: IGenericViewModel>: ViewModel<M>, IListViewModel {
+open class ListViewModel<M, CVM: IViewModel>: ViewModel<M>, IListViewModel {
     
     public typealias CellViewModelElement = CVM
     
@@ -126,8 +123,7 @@ protocol IIndexable: class {
     var indexPath: IndexPath? { get set }
 }
 
-open class CellViewModel<M>: NSObject, IGenericViewModel, IIndexable, IReactable {
-    
+open class CellViewModel<M>: NSObject, IViewModel, IIndexable, IReactable {
     public typealias ModelElement = M
     
     private var _model: M?
@@ -174,17 +170,4 @@ open class SuperCellViewModel: CellViewModel<Any> {
         super.init(model: model)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -16,7 +16,6 @@ class NavigationTransitionExamplePage: Page<NavigationTransitionExamplePageViewM
     let zoomButton = UIButton(type: .custom)
     
     override func initialize() {
-        enableBackButton = true
         
         flipButton.setTitle("Push Flip", for: .normal)
         flipButton.setBackgroundImage(UIImage.from(color: .blue), for: .normal)
@@ -90,40 +89,22 @@ class NavigationTransitionExamplePageViewModel: ViewModel<MenuModel> {
 class FlipPage: Page<ViewModel<Model>> {
     
     override func initialize() {
-        enableBackButton = true
         
         let label = UILabel()
         label.text = "Did you see the page is flipped?"
         view.addSubview(label)
         label.autoCenterInSuperview()
     }
-    
-    override func onBack() {
-        if navigationController?.presentingViewController != nil {
-           navigationService.pop(with: PopOptions(popType: .dismiss, animated: true))
-        } else {
-            super.onBack()
-        }
-    }
 }
 
 class ZoomPage: Page<ViewModel<Model>> {
     
     override func initialize() {
-        enableBackButton = true
         
         let label = UILabel()
         label.text = "Did you see the page zoom and switch?"
         view.addSubview(label)
         label.autoCenterInSuperview()
-    }
-    
-    override func onBack() {
-        if navigationController?.presentingViewController != nil {
-            navigationService.pop(with: PopOptions(popType: .dismiss, animated: true))
-        } else {
-            super.onBack()
-        }
     }
 }
 

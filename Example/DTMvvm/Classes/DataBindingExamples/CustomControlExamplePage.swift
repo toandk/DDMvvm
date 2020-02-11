@@ -17,7 +17,6 @@ class CustomControlExamplePage: Page<CustomControlExamplePageViewModel> {
     let label = UILabel()
     
     override func initialize() {
-        enableBackButton = true
         
         view.addSubview(segmentedView)
         segmentedView.autoPinEdge(toSuperviewSafeArea: .top)

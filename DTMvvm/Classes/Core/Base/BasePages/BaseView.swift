@@ -1,5 +1,5 @@
 //
-//  BasePage.swift
+//  BaseView.swift
 //  Test2
 //
 //  Created by toandk on 12/26/19.
@@ -12,42 +12,26 @@ import RxSwift
 import RxCocoa
 import PureLayout
 
-open class BasePage: UIViewController {
+open class BaseView: UIView {
     
     public var disposeBag: DisposeBag? = DisposeBag()
     public var _viewModel: IModelType?
     
-    
-    public private(set) var backButton: UIBarButtonItem?
-    
-    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
     }
     
-    public init(viewModel: IModelType? = nil) {
-        self._viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    public required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setup()
     }
     
-    open override func viewDidLoad() {
-        super.viewDidLoad()
+    open func setup() {
         
-        view.backgroundColor = .white
         initialize()
         DispatchQueue.main.async {
             self.viewModelChanged()
-        }
-    }
-    
-    open override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        if isMovingFromParent {
-            destroy()
         }
     }
     

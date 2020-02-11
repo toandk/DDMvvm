@@ -83,8 +83,6 @@ class ContactEditPage: Page<ContactEditPageViewModel> {
     override func initialize() {
         title = "Add/Edit Contact"
         
-        enableBackButton = true
-        
         view.addSubview(scrollView)
         scrollView.autoPin(toTopLayoutGuideOf: self, withInset: 0)
         scrollView.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
@@ -142,10 +140,6 @@ class ContactEditPage: Page<ContactEditPageViewModel> {
         
         cancelBtn.rx.bind(to: viewModel.cancelAction, input: ())
         submitBtn.rx.bind(to: viewModel.saveAction, input: ())
-    }
-    
-    override func onBack() {
-        navigationService.pop(with: PopOptions(popType: .dismissPopup))
     }
 }
 

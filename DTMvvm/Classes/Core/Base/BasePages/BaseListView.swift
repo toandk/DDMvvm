@@ -1,6 +1,5 @@
 //
-//  BaseListPage.swift
-//  Test2
+//  BaseListView.swift
 //
 //  Created by toandk on 12/26/19.
 //  Copyright © 2019 toandk. All rights reserved.
@@ -11,26 +10,21 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-open class BaseListPage: BasePage {
+open class BaseListView: BaseView {
     
     public var tableView: UITableView!
-    public var dataSource: RxTableViewSectionedAnimatedDataSource<SectionList<NSObject>>?
+    public var dataSource: RxTableViewSectionedReloadDataSource<SectionList<NSObject>>?
     
-    override open func viewDidLoad() {
-        super.viewDidLoad()
+    override open func setup() {
         if tableView == nil {
-            tableView = UITableView(frame: .zero, style: .plain)
-            view.addSubview(tableView)
-            DispatchQueue.main.async {
-                self.bindViewAndViewModel()
-            }
+            tableView = UITableView(frame: bounds, style: .plain)
         }
-        tableView.backgroundColor = .clear
-    }
-    
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.backgroundView = nil
+        tableView?.backgroundColor = .clear
+        if nil == tableView?.superview {
+            addSubview(tableView!)
+        }
+        
+        super.setup()
     }
     
     open override func initialize() {
@@ -47,7 +41,7 @@ open class BaseListPage: BasePage {
         guard tableView != nil else { return }
         tableView.rx.itemSelected.asObservable().subscribe(onNext: onItemSelected) => disposeBag
         
-        dataSource = RxTableViewSectionedAnimatedDataSource<SectionList<NSObject>>(
+        dataSource = RxTableViewSectionedReloadDataSource<SectionList<NSObject>>(
             configureCell: { dataSource, tableView, indexPath, item in
                 if let cellViewModel = item as? IModelType {
                     let identifier = self.cellIdentifier(cellViewModel)

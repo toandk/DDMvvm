@@ -8,9 +8,9 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 public protocol RxCollection {
-    var collectionChanged: Observable<ChangeSet> { get }
     var count: Int { get }
     func removeAll(animated: Bool?)
     func element(atIndexPath: IndexPath) -> Any?
@@ -18,141 +18,148 @@ public protocol RxCollection {
     func countElements(at section: Int) -> Int
 }
 
-
-public enum ModificationType {
-    case reload, delete, insert, move
-}
-
-public protocol ChangeSet {
-    var type: ModificationType { get }
-    var animated: Bool { get }
-}
-
-struct ModifySection: ChangeSet {
-    let type: ModificationType
-    let section: Int
-    let animated: Bool
-}
-
-struct ModifyElements: ChangeSet {
-    let type: ModificationType
-    let indexPaths: [IndexPath]
-    let animated: Bool
-}
-
-struct MoveElements: ChangeSet {
-    let type: ModificationType = .move
-    let fromIndexPaths: [IndexPath]
-    let toIndexPaths: [IndexPath]
-    let animated: Bool
-}
-
 /// Section list data sources
-public class SectionList<T> where T: Equatable {
+public class SectionList<T>: AnimatableSectionModelType where T: IdentifyEquatable {
+    public typealias Identity = String
     
     public let key: Any
     
-    private var innerSources = [T]()
+    public var identity: String {
+        return "\(key)"
+    }
+    
+    public var items = [T]()
+    
+    public required init(original: SectionList<T>, items: [T]) {
+        self.key = original.key
+        self.items = items
+    }
     
     public subscript(index: Int) -> T {
-        get { return innerSources[index] }
+        get { return items[index] }
         set(newValue) { insert(newValue, at: index) }
     }
     
     public var count: Int {
-        return innerSources.count
+        return items.count
     }
     
     public var first: T? {
-        return innerSources.first
+        return items.first
     }
     
     public var last: T? {
-        return innerSources.last
+        return items.last
     }
     
     public var allElements: [T] {
-        return innerSources
+        return items
     }
     
     public init(_ key: Any, initialElements: [T] = []) {
         self.key = key
-        innerSources.append(contentsOf: initialElements)
+        items.append(contentsOf: initialElements)
     }
     
     public func forEach(_ body: ((Int, T) -> ())) {
-        for (i, element) in innerSources.enumerated() {
+        for (i, element) in items.enumerated() {
             body(i, element)
         }
     }
     
     fileprivate func insert(_ element: T, at index: Int) {
-        innerSources.insert(element, at: index)
+        items.insert(element, at: index)
     }
     
     fileprivate func insert(_ elements: [T], at index: Int) {
-        innerSources.insert(contentsOf: elements, at: index)
+        items.insert(contentsOf: elements, at: index)
     }
     
     fileprivate func append(_ element: T) {
-        innerSources.append(element)
+        items.append(element)
     }
     
     fileprivate func append(_ elements: [T]) {
-        innerSources.append(contentsOf: elements)
+        items.append(contentsOf: elements)
     }
     
     @discardableResult
     fileprivate func remove(at index: Int) -> T? {
-        guard index < innerSources.count, index >= 0 else {
-            return nil
-        }
-        return innerSources.remove(at: index)
+        return items.remove(at: index)
     }
     
     fileprivate func remove(at indice: [Int]) {
-        let newSources = innerSources.enumerated().compactMap { indice.contains($0.offset) ? nil : $0.element }
-        innerSources = newSources
+        let newSources = items.enumerated().compactMap { indice.contains($0.offset) ? nil : $0.element }
+        items = newSources
     }
     
     fileprivate func removeAll() {
-        innerSources.removeAll()
+        items.removeAll()
     }
     
     fileprivate func sort(by predicate: (T, T) throws -> Bool) rethrows {
-        try innerSources.sort(by: predicate)
+        try items.sort(by: predicate)
     }
     
     @discardableResult
     fileprivate func firstIndex(of element: T) -> Int? {
-        return innerSources.firstIndex(of: element)
+        return items.firstIndex(of: element)
     }
     
     @discardableResult
     fileprivate func lastIndex(of element: T) -> Int? {
-        return innerSources.lastIndex(of: element)
+        return items.lastIndex(of: element)
     }
     
     @discardableResult
     fileprivate func firstIndex(where predicate: (T) throws -> Bool) rethrows -> Int? {
-        return try innerSources.firstIndex(where: predicate)
+        return try items.firstIndex(where: predicate)
     }
     
     @discardableResult
     fileprivate func lastIndex(where predicate: (T) throws -> Bool) rethrows -> Int? {
-        return try innerSources.lastIndex(where: predicate)
+        return try items.lastIndex(where: predicate)
     }
     
     fileprivate func map<U>(_ transform: (T) throws -> U) rethrows -> [U] {
-        return try innerSources.map(transform)
+        return try items.map(transform)
     }
     
     fileprivate func compactMap<U>(_ transform: (T) throws -> U?) rethrows -> [U] {
-        return try innerSources.compactMap(transform)
+        return try items.compactMap(transform)
+    }
+    
+    func toNSObjectList() -> SectionList<NSObject> {
+        let newList: SectionList<NSObject> = SectionList<NSObject>("a")
+        for item in items {
+            if let item = item as? NSObject {
+                newList.append(item)
+            }
+        }
+        return newList
     }
 }
 
-public class ReactiveCollection<T>: RxCollection where T: Equatable {
+public class ReactiveCollection<T>: RxCollection, SectionModelType where T: IdentifyEquatable {
+    public typealias Item = SectionList<T>
+    public var items: [Item] = []
+    
+    private func getNSItems() -> [SectionList<NSObject>] {
+        var nsItems: [SectionList<NSObject>] = []
+        for item in items {
+            nsItems.append(item.toNSObjectList())
+        }
+        return nsItems
+    }
+    
+    public init() {
+        
+    }
+    
+    public required init(original: ReactiveCollection<T>, items: [SectionList<T>]) {
+        self.items = items
+    }
+    
     public func element(atIndexPath: IndexPath) -> Any? {
         return self[atIndexPath.row, atIndexPath.section]
     }
@@ -163,64 +170,58 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     
     public var animated: Bool = true
     
-    private var innerSources: [SectionList<T>] = []
-    
-    private let publisher = PublishSubject<ChangeSet>()
-    private let rxInnerSources = BehaviorRelay<[SectionList<T>]>(value: [])
-    
-    public var collectionChanged: Observable<ChangeSet> {
-        return publisher.asObservable()
-    }
+    public let rxInnerSources = BehaviorRelay<[SectionList<T>]>(value: [])
+    public let rxNSObjectSources = BehaviorRelay<[SectionList<NSObject>]>(value: [])
     
     public subscript(index: Int, section: Int) -> T {
-        get { return innerSources[section][index] }
+        get { return items[section][index] }
         set(newValue) { insert(newValue, at: index, of: section) }
     }
     
     public subscript(index: Int) -> SectionList<T> {
-        get { return innerSources[index] }
+        get { return items[index] }
         set(newValue) { insertSection(newValue, at: index) }
     }
     
     public var count: Int {
-        return innerSources.count
+        return items.count
     }
     
     public var first: SectionList<T>? {
-        return innerSources.first
+        return items.first
     }
     
     public var last: SectionList<T>? {
-        return innerSources.last
+        return items.last
     }
     
     public func forEach(_ body: ((Int, SectionList<T>) -> ())) {
-        for (i, section) in innerSources.enumerated() {
+        for (i, section) in items.enumerated() {
             body(i, section)
         }
     }
     
     public func countElements(at section: Int = 0) -> Int {
-        guard section >= 0 && section < innerSources.count else { return 0 }
-        return innerSources[section].count
+        guard section >= 0 && section < items.count else { return 0 }
+        return items[section].count
     }
     
     // MARK: - section manipulations
     
     public func reload(at section: Int = -1, animated: Bool? = nil) {
-        if innerSources.count > 0 && section < innerSources.count {
-            rxInnerSources.accept(innerSources)
-            publisher.onNext(ModifySection(type: .reload, section: section, animated: animated ?? self.animated))
+        if items.count > 0 && section < items.count {
+            rxInnerSources.accept(items)
+            rxNSObjectSources.accept(getNSItems())
         }
     }
     
     public func reset(_ elements: [T], of section: Int = 0, animated: Bool? = nil) {
-        if section < innerSources.count {
-            innerSources[section].removeAll()
-            innerSources[section].append(elements)
+        if section < items.count {
+            items[section].removeAll()
+            items[section].append(elements)
             
-            rxInnerSources.accept(innerSources)
-            publisher.onNext(ModifySection(type: .reload, section: section, animated: animated ?? self.animated))
+            rxInnerSources.accept(items)
+            rxNSObjectSources.accept(getNSItems())
         }
     }
     
@@ -229,25 +230,25 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     }
     
     public func reset(_ sources: [SectionList<T>], animated: Bool? = nil) {
-        innerSources.removeAll()
-        innerSources.append(contentsOf: sources)
+        items.removeAll()
+        items.append(contentsOf: sources)
         
         reload(animated: animated)
     }
     
-    public func insertSection(_ key: Any, elements: [T], at index: Int, animated: Bool? = nil) {
+    public func insertSection(_ key: String, elements: [T], at index: Int, animated: Bool? = nil) {
         insertSection(SectionList<T>(key, initialElements: elements), at: index, animated: animated)
     }
     
     public func insertSection(_ sectionList: SectionList<T>, at index: Int, animated: Bool? = nil) {
-        if innerSources.count == 0 {
-            innerSources.append(sectionList)
+        if items.count == 0 {
+            items.append(sectionList)
         } else {
-            innerSources.insert(sectionList, at: index)
+            items.insert(sectionList, at: index)
         }
         
-        rxInnerSources.accept(innerSources)
-        publisher.onNext(ModifySection(type: .insert, section: index, animated: animated ?? self.animated))
+        rxInnerSources.accept(items)
+        rxNSObjectSources.accept(getNSItems())
     }
     
     public func appendSections(_ sectionLists: [SectionList<T>], animated: Bool? = nil) {
@@ -256,32 +257,29 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
         }
     }
     
-    public func appendSection(_ key: Any, elements: [T], animated: Bool? = nil) {
+    public func appendSection(_ key: String, elements: [T], animated: Bool? = nil) {
         appendSection(SectionList<T>(key, initialElements: elements), animated: animated)
     }
     
     public func appendSection(_ sectionList: SectionList<T>, animated: Bool? = nil) {
-        let section = innerSources.count == 0 ? 0 : innerSources.count
-        
-        innerSources.append(sectionList)
-        rxInnerSources.accept(innerSources)
-        publisher.onNext(ModifySection(type: .insert, section: section, animated: animated ?? self.animated))
+        items.append(sectionList)
+        rxInnerSources.accept(items)
+        rxNSObjectSources.accept(getNSItems())
     }
     
     @discardableResult
-    public func removeSection(at index: Int, animated: Bool? = nil) -> SectionList<T>? {
-        guard index < innerSources.count, index >= 0 else { return nil }
-        let element = innerSources.remove(at: index)
-        rxInnerSources.accept(innerSources)
-        publisher.onNext(ModifySection(type: .delete, section: index, animated: animated ?? self.animated))
+    public func removeSection(at index: Int, animated: Bool? = nil) -> SectionList<T> {
+        let element = items.remove(at: index)
+        rxInnerSources.accept(items)
+        rxNSObjectSources.accept(getNSItems())
         
         return element
     }
     
     public func removeAll(animated: Bool? = nil) {
-        innerSources.removeAll()
-        rxInnerSources.accept(innerSources)
-        publisher.onNext(ModifySection(type: .delete, section: -1, animated: animated ?? self.animated))
+        items.removeAll()
+        rxInnerSources.accept(items)
+        rxNSObjectSources.accept(getNSItems())
     }
     
     // MARK: - section elements manipulations
@@ -299,20 +297,19 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     }
     
     public func insert(_ elements: [T], at index: Int, of section: Int = 0, animated: Bool? = nil) {
-        if section >= innerSources.count {
+        if section >= items.count {
             appendSection("", elements: elements, animated: animated)
             return
         }
         
-        if innerSources[section].count == 0 {
-            innerSources[section].append(elements)
-        } else if index < innerSources[section].count {
-            innerSources[section].insert(elements, at: index)
+        if items[section].count == 0 {
+            items[section].append(elements)
+        } else if index < items[section].count {
+            items[section].insert(elements, at: index)
         }
         
-        let indexPaths = Array(index..<index + elements.count).map { IndexPath(row: $0, section: section) }
-        rxInnerSources.accept(innerSources)
-        publisher.onNext(ModifyElements(type: .insert, indexPaths: indexPaths, animated: animated ?? self.animated))
+        rxInnerSources.accept(items)
+        rxNSObjectSources.accept(getNSItems())
     }
     
     public func append(_ element: T, to section: Int = 0, animated: Bool? = nil) {
@@ -320,22 +317,14 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     }
     
     public func append(_ elements: [T], to section: Int = 0, animated: Bool? = nil) {
-        if section >= innerSources.count {
+        if section >= items.count {
             appendSection("", elements: elements, animated: animated)
             return
         }
         
-        let indexPaths: [IndexPath]
-        if elements.count == 0 {
-            indexPaths = []
-        } else {
-            let startIndex = innerSources[section].count == 0 ? 0 : innerSources[section].count
-            indexPaths = Array(startIndex..<startIndex + elements.count).map { IndexPath(row: $0, section: section) }
-        }
-        
-        innerSources[section].append(elements)
-        rxInnerSources.accept(innerSources)
-        publisher.onNext(ModifyElements(type: .insert, indexPaths: indexPaths, animated: animated ?? self.animated))
+        items[section].append(elements)
+        rxInnerSources.accept(items)
+        rxNSObjectSources.accept(getNSItems())
     }
     
     @discardableResult
@@ -345,9 +334,9 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     
     @discardableResult
     public func remove(at index: Int, of section: Int = 0, animated: Bool? = nil) -> T? {
-        if let element = innerSources[section].remove(at: index) {
-            rxInnerSources.accept(innerSources)
-            publisher.onNext(ModifyElements(type: .delete,indexPaths: [IndexPath(row: index, section: section)], animated: animated ?? self.animated))
+        if let element = items[section].remove(at: index) {
+            rxInnerSources.accept(items)
+            rxNSObjectSources.accept(getNSItems())
             
             return element
         }
@@ -362,20 +351,20 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     
     @discardableResult
     public func remove(at indexPaths: [IndexPath], animated: Bool? = nil) -> [T] {
-        let removedElements = indexPaths.compactMap { innerSources[$0.section].remove(at: $0.row) }
+        let removedElements = indexPaths.compactMap { items[$0.section].remove(at: $0.row) }
         
-        rxInnerSources.accept(innerSources)
-        publisher.onNext(ModifyElements(type: .delete, indexPaths: indexPaths, animated: animated ?? self.animated))
+        rxInnerSources.accept(items)
+        rxNSObjectSources.accept(getNSItems())
         
         return removedElements
     }
     
     public func sort(by predicate: (T, T) throws -> Bool, at section: Int = 0, animated: Bool? = nil) rethrows {
-        let oldElements = innerSources[section].allElements
+        let oldElements = items[section].allElements
         
-        try innerSources[section].sort(by: predicate)
+        try items[section].sort(by: predicate)
         
-        let newElements = innerSources[section].allElements
+        let newElements = items[section].allElements
         
         var fromIndexPaths: [IndexPath] = []
         var toIndexPaths: [IndexPath] = []
@@ -387,67 +376,37 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
         }
         
         if fromIndexPaths.count == toIndexPaths.count {
-            rxInnerSources.accept(innerSources)
-            publisher.onNext(MoveElements(fromIndexPaths: fromIndexPaths, toIndexPaths: toIndexPaths, animated: animated ?? self.animated))
+            rxInnerSources.accept(items)
+            rxNSObjectSources.accept(getNSItems())
         }
     }
     
-    public func move(from fromIndexPaths: [IndexPath], to toIndexPaths: [IndexPath], animated: Bool? = nil) {
-        guard fromIndexPaths.count == toIndexPaths.count else { return }
-        
-        var validIndice: [Int] = []
-        for (i, fromIndexPath) in fromIndexPaths.enumerated() {
-            let toIndexPath = toIndexPaths[i]
-            if fromIndexPath.section != toIndexPath.section {
-                if let element = innerSources[fromIndexPath.section].remove(at: fromIndexPath.row) {
-                    innerSources[toIndexPath.section].insert(element, at: toIndexPath.row)
-                    validIndice.append(i)
-                }
-            } else {
-                let element = innerSources[fromIndexPath.section][fromIndexPath.row]
-                innerSources[toIndexPath.section].insert(element, at: toIndexPath.row)
-                
-                if fromIndexPath.row < toIndexPath.row {
-                    innerSources[fromIndexPath.section].remove(at: fromIndexPath.row)
-                    validIndice.append(i)
-                } else if fromIndexPath.row > toIndexPath.row {
-                    innerSources[fromIndexPath.section].remove(at: fromIndexPath.row + 1)
-                    validIndice.append(i)
-                }
-            }
-        }
-        
-        if validIndice.count > 0 {
-            rxInnerSources.accept(innerSources)
-            publisher.onNext(MoveElements(fromIndexPaths: validIndice.map { fromIndexPaths[$0] }, toIndexPaths: validIndice.map { toIndexPaths[$0] }, animated: animated ?? self.animated))
-        }
-    }
     
     public func asObservable() -> Observable<[SectionList<T>]> {
         return rxInnerSources.asObservable()
     }
     
     public func indexForSection(withKey key: AnyObject) -> Int? {
-        return innerSources.firstIndex(where: { key.isEqual($0.key) })
+        return items.firstIndex(where: { key.isEqual($0.key) })
     }
     
     @discardableResult
     public func firstIndex(of element: T, at section: Int = 0) -> Int? {
-        return innerSources[section].firstIndex(of: element)
+        return items[section].firstIndex(of: element)
     }
     
     @discardableResult
     public func lastIndex(of element: T, at section: Int) -> Int? {
-        return innerSources[section].lastIndex(of: element)
+        return items[section].lastIndex(of: element)
     }
     
     @discardableResult
     public func firstIndex(where predicate: (T) throws -> Bool, at section: Int) rethrows -> Int? {
-        return try innerSources[section].firstIndex(where: predicate)
+        return try items[section].firstIndex(where: predicate)
     }
     
     @discardableResult
     public func lastIndex(where predicate: (T) throws -> Bool, at section: Int) rethrows -> Int? {
-        return try innerSources[0].lastIndex(where: predicate)
+        return try items[0].lastIndex(where: predicate)
     }
 }

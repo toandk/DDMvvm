@@ -16,11 +16,3 @@ public extension Array {
         }
     }
 }
-
-public extension Array where Element: Model {
-    
-    /// Transform array of models into array of viewmodels
-    func toCellViewModels<T: IGenericViewModel>() -> [T] where T.ModelElement == Element {
-        return compactMap { T(model: $0) }
-    }
-}

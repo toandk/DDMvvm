@@ -1,9 +1,9 @@
 //
-//  BaseListPage.swift
+//  BaseCollectionPage.swift
 //  Test2
 //
-//  Created by toandk on 12/26/19.
-//  Copyright © 2019 toandk. All rights reserved.
+//  Created by toandk on 2/7/20.
+//  Copyright © 2020 toandk. All rights reserved.
 //
 
 import Foundation
@@ -11,58 +11,53 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-open class BaseListPage: BasePage {
+open class BaseCollectionPage: BasePage {
     
-    public var tableView: UITableView!
-    public var dataSource: RxTableViewSectionedAnimatedDataSource<SectionList<NSObject>>?
+    public var collectionView: UICollectionView!
+    public var dataSource: RxCollectionViewSectionedAnimatedDataSource<SectionList<NSObject>>?
     
     override open func viewDidLoad() {
         super.viewDidLoad()
-        if tableView == nil {
-            tableView = UITableView(frame: .zero, style: .plain)
-            view.addSubview(tableView)
+        if collectionView == nil {
+            collectionView = UICollectionView(frame: .zero)
+            view.addSubview(collectionView)
             DispatchQueue.main.async {
                 self.bindViewAndViewModel()
             }
         }
-        tableView.backgroundColor = .clear
-    }
-    
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tableView.backgroundView = nil
+        collectionView.backgroundColor = .clear
     }
     
     open override func initialize() {
-        tableView.autoPinEdgesToSuperviewEdges(with: .zero)
+        collectionView.autoPinEdgesToSuperviewEdges(with: .zero)
     }
     
     open override func destroy() {
         super.destroy()
-        tableView.removeFromSuperview()
+        collectionView.removeFromSuperview()
     }
     
     /// Every time the viewModel changed, this method will be called again, so make sure to call super for ListPage to work
     open override func bindViewAndViewModel() {
-        guard tableView != nil else { return }
-        tableView.rx.itemSelected.asObservable().subscribe(onNext: onItemSelected) => disposeBag
+        guard collectionView != nil else { return }
+        collectionView.rx.itemSelected.asObservable().subscribe(onNext: onItemSelected) => disposeBag
         
-        dataSource = RxTableViewSectionedAnimatedDataSource<SectionList<NSObject>>(
+        dataSource = RxCollectionViewSectionedAnimatedDataSource<SectionList<NSObject>>(
             configureCell: { dataSource, tableView, indexPath, item in
                 if let cellViewModel = item as? IModelType {
                     let identifier = self.cellIdentifier(cellViewModel)
-                    let cell = tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
+                    let cell = tableView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
                     if let cell = cell as? IAnyView {
                         cell.anyViewModel = cellViewModel
                     }
                     (cellViewModel as? IIndexable)?.indexPath = indexPath
                     return cell
                 }
-                return UITableViewCell()
+                return UICollectionViewCell()
         })
         
         (_viewModel as? IListItemType)?.rxNSObjectSources
-            .bind(to: tableView.rx.items(dataSource: dataSource!)) => disposeBag
+            .bind(to: collectionView.rx.items(dataSource: dataSource!)) => disposeBag
     }
     
     private func onItemSelected(_ indexPath: IndexPath) {
@@ -87,4 +82,3 @@ open class BaseListPage: BasePage {
      */
     open func selectedItemDidChange(_ cellViewModel: Any) { }
 }
-

@@ -17,13 +17,8 @@ class ExampleMenuPage: ListPage<ExampleMenuPageViewModel> {
         // remove this if we want to custom tableView layout
         super.initialize()
         
-        let count = navigationController?.viewControllers.count ?? 0
-        if count > 1 {
-            enableBackButton = true
-        }
-        
-        tableView.estimatedRowHeight = 200
-        tableView.register(ExampleMenuCell.self, forCellReuseIdentifier: ExampleMenuCell.identifier)
+        tableView?.estimatedRowHeight = 200
+        tableView?.register(ExampleMenuCell.self, forCellReuseIdentifier: ExampleMenuCell.identifier)
     }
     
     override func bindViewAndViewModel() {
@@ -40,7 +35,7 @@ class ExampleMenuPage: ListPage<ExampleMenuPageViewModel> {
     
     override func selectedItemDidChange(_ cellViewModel: ExampleMenuCellViewModel) {
         if let indexPath = viewModel?.rxSelectedIndex.value {
-            tableView.deselectRow(at: indexPath, animated: true)
+            tableView?.deselectRow(at: indexPath, animated: true)
         }
     }
 }
@@ -51,7 +46,7 @@ class ExampleMenuPageViewModel: ListViewModel<MenuModel, ExampleMenuCellViewMode
     
     override func react() {
         let models = getMenuModels()
-        itemsSource.reset([models.toCellViewModels()])
+        itemsSource.reset([models.map{ ExampleMenuCellViewModel(model: $0) }])
         
         // set page title
         rxPageTitle.accept(model?.title ?? "")
@@ -239,20 +234,20 @@ class TPExampleMenuPageViewModel: ExampleMenuPageViewModel {
         var page: UIViewController?
         switch indexPath.row {
         case 0:
-//            let vm = SimpleListPageViewModel(model: cellViewModel.model)
-//            page = SimpleListPage(viewModel: vm)
-            let vm = NonGenericTableViewModel(model: cellViewModel.model)
-            let vc = NonGenericTablePage(nibName: "NonGenericTablePage", bundle: nil)
-            vc.viewModel = vm
-            page = vc
+            let vm = SimpleListPageViewModel(model: cellViewModel.model)
+            page = SimpleListPage(viewModel: vm)
+//            let vm = NonGenericTableViewModel(model: cellViewModel.model)
+//            let vc = NonGenericTablePage(nibName: "NonGenericTablePage", bundle: nil)
+//            vc.viewModel = vm
+//            page = vc
             
         case 1:
-//            let vm = SectionListPageViewModel(model: cellViewModel.model)
-//            page = SectionListPage(viewModel: vm)
             let vm = SectionListPageViewModel(model: cellViewModel.model)
-            let vc = NonGenericSectionListPage(nibName: "NonGenericSectionListPage", bundle: nil)
-            vc.viewModel = vm
-            page = vc
+            page = SectionListPage(viewModel: vm)
+//            let vm = SectionListPageViewModel(model: cellViewModel.model)
+//            let vc = NonGenericSectionListPage(nibName: "NonGenericSectionListPage", bundle: nil)
+//            vc.viewModel = vm
+//            page = vc
             
         default: ()
         }

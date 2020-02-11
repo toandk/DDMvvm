@@ -23,7 +23,6 @@ class DataBindingExamplePage: Page<DataBindingExamplePageViewModel> {
     let submitBtn = UIButton(type: .custom)
     
     override func initialize() {
-        enableBackButton = true
         
         view.addSubview(scrollView)
         scrollView.autoPinEdge(toSuperviewSafeArea: .top)

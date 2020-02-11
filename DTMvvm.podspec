@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'DTMvvm'
-  s.version          = '1.6.2'
+  s.version          = '1.6.3'
   s.summary          = 'A MVVM library for iOS Swift.'
 
 # This description is used to generate tags and improve search results.
@@ -48,4 +48,5 @@ A MVVM library for iOS Swift, including interfaces for View, ViewModel and Model
   s.dependency 'ObjectMapper'
   s.dependency 'PureLayout'
   s.dependency 'Moya'
+  s.dependency 'RxDataSources'
 end

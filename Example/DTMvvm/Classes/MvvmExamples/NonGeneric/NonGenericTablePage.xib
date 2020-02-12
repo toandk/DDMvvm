@@ -10,10 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NonGenericTablePage" customModule="DDMvvm_Example" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NonGenericTablePage" customModule="DTMvvm_Example" customModuleProvider="target">
             <connections>
-                <outlet property="addButton" destination="fn9-Ut-hAv" id="pUN-6F-ygj"/>
-                <outlet property="tableView" destination="gFM-HH-zeZ" id="geQ-PQ-EPD"/>
+                <outlet property="_tableView" destination="gFM-HH-zeZ" id="lP8-xm-3Qd"/>
                 <outlet property="view" destination="iN0-l3-epB" id="AK2-hy-4kV"/>
             </connections>
         </placeholder>
@@ -33,6 +32,9 @@
                         <constraint firstAttribute="width" constant="44" id="vg6-kH-dik"/>
                     </constraints>
                     <state key="normal" title="Add"/>
+                    <connections>
+                        <action selector="addAction" destination="-1" eventType="touchUpInside" id="2Nj-63-Jkl"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

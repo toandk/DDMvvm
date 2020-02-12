@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NonGenericSectionListPage" customModule="DDMvvm_Example" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NonGenericSectionListPage" customModule="DTMvvm_Example" customModuleProvider="target">
             <connections>
+                <outlet property="_tableView" destination="Fbo-9h-tKb" id="44J-vA-mSo"/>
                 <outlet property="addBtn" destination="Eem-qi-qaH" id="IpI-jY-xS7"/>
                 <outlet property="sortBtn" destination="iJS-i9-0j4" id="qbQ-4B-dhX"/>
-                <outlet property="tableView" destination="Fbo-9h-tKb" id="o0t-00-UI8"/>
                 <outlet property="view" destination="QNn-2N-ga1" id="6w4-g3-BLh"/>
             </connections>
         </placeholder>

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		11592F4D61CBB654980B34D4 /* Pods_DTMvvm_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B46AEF675F1131A30D253CB /* Pods_DTMvvm_Tests.framework */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		700290A823F3934C0080358E /* NGListPageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 700290A723F3934C0080358E /* NGListPageCell.xib */; };
+		700290AA23F393790080358E /* NGListPageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700290A923F393790080358E /* NGListPageCell.swift */; };
 		706AD0B92317AD1D00610983 /* FlickrService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706AD08A2317AD1D00610983 /* FlickrService.swift */; };
 		706AD0BA2317AD1D00610983 /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706AD08B2317AD1D00610983 /* FlickrAPI.swift */; };
 		706AD0BB2317AD1D00610983 /* FlickrImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706AD08C2317AD1D00610983 /* FlickrImageCell.swift */; };
@@ -69,6 +71,8 @@
 		607FACE51AFB9204008FA782 /* DTMvvm_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DTMvvm_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		700290A723F3934C0080358E /* NGListPageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NGListPageCell.xib; sourceTree = "<group>"; };
+		700290A923F393790080358E /* NGListPageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NGListPageCell.swift; sourceTree = "<group>"; };
 		706AD08A2317AD1D00610983 /* FlickrService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrService.swift; sourceTree = "<group>"; };
 		706AD08B2317AD1D00610983 /* FlickrAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
 		706AD08C2317AD1D00610983 /* FlickrImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrImageCell.swift; sourceTree = "<group>"; };
@@ -289,6 +293,8 @@
 				706AD0A12317AD1D00610983 /* NonGenericSectionListPage.xib */,
 				706AD0A22317AD1D00610983 /* NonGenericSectionListPage.swift */,
 				706AD0A32317AD1D00610983 /* NonGenericTablePage.swift */,
+				700290A923F393790080358E /* NGListPageCell.swift */,
+				700290A723F3934C0080358E /* NGListPageCell.xib */,
 			);
 			path = NonGeneric;
 			sourceTree = "<group>";
@@ -434,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				706AD0CC2317AD1D00610983 /* NonGenericSectionListPage.xib in Resources */,
+				700290A823F3934C0080358E /* NGListPageCell.xib in Resources */,
 				706AD0DC2317AD1D00610983 /* Images.xcassets in Resources */,
 				706AD0DB2317AD1D00610983 /* LaunchScreen.xib in Resources */,
 				706AD0CB2317AD1D00610983 /* NonGenericTablePage.xib in Resources */,
@@ -546,6 +553,7 @@
 				706AD0C12317AD1D00610983 /* SectionHeaderCell.swift in Sources */,
 				706AD0CE2317AD1D00610983 /* NonGenericTablePage.swift in Sources */,
 				706AD0CD2317AD1D00610983 /* NonGenericSectionListPage.swift in Sources */,
+				700290AA23F393790080358E /* NGListPageCell.swift in Sources */,
 				706AD0C52317AD1D00610983 /* SimpleCollectionPageCell.swift in Sources */,
 				706AD0D82317AD1D00610983 /* SegmentedView.swift in Sources */,
 				706AD0CA2317AD1D00610983 /* SectionListPage.swift in Sources */,

@@ -223,6 +223,8 @@ class TPExampleMenuPageViewModel: ExampleMenuPageViewModel {
     
     override func getMenuModels() -> [MenuModel] {
         return [
+            MenuModel(withTitle: "Simple Generic ListPage", desc: "A simple Generic ListPage which has one cell identifier."),
+            MenuModel(withTitle: "Generic ListPage with section", desc: "A simple Generic ListPage with section header and multiple cell identifiers."),
             MenuModel(withTitle: "Simple ListPage", desc: "A simple ListPage which has one cell identifier."),
             MenuModel(withTitle: "ListPage with section", desc: "A simple ListPage with section header and multiple cell identifiers."),
         ]
@@ -236,18 +238,21 @@ class TPExampleMenuPageViewModel: ExampleMenuPageViewModel {
         case 0:
             let vm = SimpleListPageViewModel(model: cellViewModel.model)
             page = SimpleListPage(viewModel: vm)
-//            let vm = NonGenericTableViewModel(model: cellViewModel.model)
-//            let vc = NonGenericTablePage(nibName: "NonGenericTablePage", bundle: nil)
-//            vc.viewModel = vm
-//            page = vc
             
         case 1:
             let vm = SectionListPageViewModel(model: cellViewModel.model)
             page = SectionListPage(viewModel: vm)
-//            let vm = SectionListPageViewModel(model: cellViewModel.model)
-//            let vc = NonGenericSectionListPage(nibName: "NonGenericSectionListPage", bundle: nil)
-//            vc.viewModel = vm
-//            page = vc
+
+        case 2:
+            let vm = NonGenericTableViewModel(model: cellViewModel.model)
+            let vc = NonGenericTablePage(nibName: "NonGenericTablePage", bundle: nil)
+            vc._viewModel = vm
+            page = vc
+        case 3:
+            let vm = SectionListPageViewModel(model: cellViewModel.model)
+            let vc = NonGenericSectionListPage(nibName: "NonGenericSectionListPage", bundle: nil)
+            vc._viewModel = vm
+            page = vc
             
         default: ()
         }

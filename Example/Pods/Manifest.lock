@@ -5,7 +5,7 @@ PODS:
   - Alamofire (4.8.2)
   - AlamofireImage (3.5.2):
     - Alamofire (~> 4.8)
-  - DTMvvm (1.5.0):
+  - DTMvvm (1.6.2):
     - Action
     - Alamofire
     - AlamofireImage
@@ -53,7 +53,7 @@ SPEC CHECKSUMS:
   Action: 0d14986aad0f1330aa27ce65d0cdeaacbb63d91c
   Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
   AlamofireImage: 63cfe3baf1370be6c498149687cf6db3e3b00999
-  DTMvvm: bd58255e6d8b0d5297b8c22366f7c42d30ee17cc
+  DTMvvm: 4861aaed5056e6bae7d8655685d5f94f31d3d95d
   Moya: f4a4b80ff2f8a4ffc208dfb31cd91636622fee6e
   ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   PureLayout: f08c01b8dec00bb14a1fefa3de4c7d9c265df85e
@@ -64,4 +64,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4c9730cbf6f6da43c59e46cda18b2e02920b947d
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

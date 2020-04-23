@@ -27,7 +27,7 @@ public extension ReactiveCollection {
 
 open class BaseListPage: BasePage, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet public weak var tableView: UITableView!
     
     override open func viewDidLoad() {
         super.viewDidLoad()

@@ -50,7 +50,10 @@ open class ListView<VM: IListViewModel>: View<VM>, UITableViewDataSource, UITabl
     }
     
     private func onItemSelected(_ indexPath: IndexPath) {
-        guard let viewModel = self.viewModel else { return }
+        guard let viewModel = viewModel,
+            indexPath.section < viewModel.itemsSource.count,
+            indexPath.row < viewModel.itemsSource[indexPath.section].count
+            else { return }
         let cellViewModel = viewModel.itemsSource[indexPath.row, indexPath.section]
         
         viewModel.rxSelectedItem.accept(cellViewModel)
@@ -142,7 +145,10 @@ open class ListView<VM: IListViewModel>: View<VM>, UITableViewDataSource, UITabl
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let viewModel = viewModel else {
+        guard let viewModel = viewModel,
+            indexPath.section < viewModel.itemsSource.count,
+            indexPath.row < viewModel.itemsSource[indexPath.section].count
+            else {
             return UITableViewCell(style: .default, reuseIdentifier: "Cell")
         }
         

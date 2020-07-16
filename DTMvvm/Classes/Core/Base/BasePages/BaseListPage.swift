@@ -53,10 +53,15 @@ open class BaseListPage: BasePage, UITableViewDataSource, UITableViewDelegate {
         super.bindViewAndViewModel()
         tableView.reloadData()
         
-        tableView.rx.itemSelected.asObservable().subscribe(onNext: onItemSelected) => disposeBag
+        tableView.rx.itemSelected.asObservable()
+            .subscribe(onNext: { [weak self] indexPath in
+                self?.onItemSelected(indexPath)
+            }) => disposeBag
         getItemSource()?.collectionChanged
             .observeOn(Scheduler.shared.mainScheduler)
-            .subscribe(onNext: onDataSourceChanged) => disposeBag
+            .subscribe(onNext: { [weak self] changeSet in
+                self?.onDataSourceChanged(changeSet)
+            }) => disposeBag
     }
     
     open override func localHudToggled(_ value: Bool) {

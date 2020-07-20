@@ -153,19 +153,17 @@ open class BaseListPage: BasePage, UITableViewDataSource, UITableViewDelegate {
     
     // MARK: - Table view datasources
     
-    public func numberOfSections(in tableView: UITableView) -> Int {
+    open func numberOfSections(in tableView: UITableView) -> Int {
         let count = getItemSource()?.count ?? 0
-        print("sections: \(count)")
         return count
     }
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let count = getItemSource()?.countElements(at: section) ?? 0
-        print("rows: \(count)")
         return count
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let itemsSource = getItemSource(),
             let cellViewModel = itemsSource.element(atIndexPath: indexPath)
             else {

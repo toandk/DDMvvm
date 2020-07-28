@@ -149,7 +149,7 @@ open class ListView<VM: IListViewModel>: View<VM>, UITableViewDataSource, UITabl
         return viewModel?.itemsSource.countElements(at: section) ?? 0
     }
     
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let viewModel = viewModel,
             indexPath.section < viewModel.itemsSource.count,
             indexPath.row < viewModel.itemsSource[indexPath.section].count

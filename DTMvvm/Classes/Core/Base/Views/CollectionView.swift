@@ -164,7 +164,7 @@ open class CollectionView<VM: IListViewModel>: View<VM>, UICollectionViewDataSou
         return counter[section] ?? 0
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let viewModel = viewModel else {
             return UICollectionViewCell(frame: .zero)
         }

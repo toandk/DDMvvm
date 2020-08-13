@@ -433,21 +433,25 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     
     @discardableResult
     public func firstIndex(of element: T, at section: Int = 0) -> Int? {
+        guard innerSources.count > section else { return nil }
         return innerSources[section].firstIndex(of: element)
     }
     
     @discardableResult
     public func lastIndex(of element: T, at section: Int) -> Int? {
+        guard innerSources.count > section else { return nil }
         return innerSources[section].lastIndex(of: element)
     }
     
     @discardableResult
     public func firstIndex(where predicate: (T) throws -> Bool, at section: Int) rethrows -> Int? {
+        guard innerSources.count > section else { return nil }
         return try innerSources[section].firstIndex(where: predicate)
     }
     
     @discardableResult
     public func lastIndex(where predicate: (T) throws -> Bool, at section: Int) rethrows -> Int? {
-        return try innerSources[0].lastIndex(where: predicate)
+        guard innerSources.count > section else { return nil }
+        return try innerSources[section].lastIndex(where: predicate)
     }
 }

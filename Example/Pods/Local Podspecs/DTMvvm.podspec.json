@@ -1,6 +1,6 @@
 {
   "name": "DTMvvm",
-  "version": "1.6.5",
+  "version": "1.6.6",
   "summary": "A MVVM library for iOS Swift.",
   "description": "A MVVM library for iOS Swift, including interfaces for View, ViewModel and Model, DI and Services",
   "homepage": "https://github.com/toandk/DTMvvm.git",
@@ -13,11 +13,11 @@
   },
   "source": {
     "git": "https://github.com/toandk/DTMvvm.git",
-    "tag": "1.6.5"
+    "tag": "1.6.6"
   },
   "swift_versions": "4.2",
   "platforms": {
-    "ios": "9.0"
+    "ios": "10.0"
   },
   "source_files": "DTMvvm/Classes/**/*",
   "frameworks": "UIKit",

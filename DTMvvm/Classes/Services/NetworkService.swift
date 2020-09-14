@@ -13,7 +13,7 @@ import RxSwift
 /// Base network service, using SessionManager from Alamofire
 open class NetworkService {
     
-    public let sessionManager: SessionManager
+    public let sessionManager: Session
     private let sessionConfiguration: URLSessionConfiguration = .default
     
     public var timeout: TimeInterval = 30 {
@@ -27,7 +27,7 @@ open class NetworkService {
         self.baseUrl = baseUrl
         
         sessionConfiguration.timeoutIntervalForRequest = timeout
-        sessionManager = Alamofire.SessionManager(configuration: sessionConfiguration)
+        sessionManager = Alamofire.Session(configuration: sessionConfiguration)
     }
     
     public func callRequest(_ path: String,
@@ -45,12 +45,11 @@ open class NetworkService {
                 headers: headers)
             
             request.responseString { response in
-                if let error = response.result.error {
-                    single(.error(error))
-                } else if let body = response.result.value {
+                switch response.result {
+                case .success(let body):
                     single(.success(body))
-                } else {
-                    single(.error(NSError.unknown))
+                case .failure(let error):
+                    single(.error(error))
                 }
             }
             
@@ -63,7 +62,7 @@ open class NetworkService {
         
         if let additionalHeaders = additionalHeaders {
             additionalHeaders.forEach { pair in
-                headers.updateValue(pair.value, forKey: pair.key)
+                headers[pair.name] = pair.value
             }
         }
         

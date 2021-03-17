@@ -59,6 +59,11 @@ public class SectionList<T> where T: Equatable {
         set(newValue) { insert(newValue, at: index) }
     }
     
+    public func getItem(index: Int) -> T? {
+        guard index >= 0, index < innerSources.count else { return nil }
+        return innerSources[index]
+    }
+    
     public var count: Int {
         return innerSources.count
     }
@@ -175,6 +180,12 @@ public class ReactiveCollection<T>: RxCollection where T: Equatable {
     public subscript(index: Int, section: Int) -> T {
         get { return innerSources[section][index] }
         set(newValue) { insert(newValue, at: index, of: section) }
+    }
+    
+    public func getItem(section: Int, index: Int) -> T? {
+        guard section < innerSources.count, index < innerSources[section].count
+        else { return nil }
+        return innerSources[section][index]
     }
     
     public subscript(index: Int) -> SectionList<T> {

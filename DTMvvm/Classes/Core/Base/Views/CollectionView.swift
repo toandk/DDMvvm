@@ -165,11 +165,11 @@ open class CollectionView<VM: IListViewModel>: View<VM>, UICollectionViewDataSou
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let viewModel = viewModel else {
+        guard let viewModel = viewModel,
+              let cellViewModel = viewModel.itemsSource.getItem(section: indexPath.section, index: indexPath.row)
+            else {
             return UICollectionViewCell(frame: .zero)
         }
-        
-        let cellViewModel = viewModel.itemsSource[indexPath.row, indexPath.section]
         
         // set index for each cell
         (cellViewModel as? IIndexable)?.indexPath = indexPath

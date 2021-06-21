@@ -55,7 +55,7 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
                 self?.onItemSelected(indexPath)
             }) => disposeBag
         viewModel?.itemsSource.collectionChanged
-            .observeOn(Scheduler.shared.mainScheduler)
+            .throttle(.microseconds(300), scheduler: Scheduler.shared.mainScheduler)
             .subscribe(onNext: { [weak self] changeSet in
                 self?.onDataSourceChanged(changeSet)
             }) => disposeBag

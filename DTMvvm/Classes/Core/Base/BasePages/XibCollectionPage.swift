@@ -24,6 +24,7 @@ open class XibCollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewData
     }
 
     override open func viewDidLoad() {
+        setupViewFromNib()
         super.viewDidLoad()
     }
     
@@ -69,9 +70,7 @@ open class XibCollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewData
         return UICollectionViewFlowLayout()
     }
 
-    open override func initialize() {
-        setupViewFromNib()
-    }
+    open override func initialize() {}
     
     open override func destroy() {
         super.destroy()

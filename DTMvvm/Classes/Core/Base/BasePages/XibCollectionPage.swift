@@ -51,7 +51,7 @@ open class XibCollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewData
         fatalError("Subclasses have to implement this method.")
     }
     
-    var collectionView: UICollectionView {
+    open var collectionView: UICollectionView {
         return getCollectionView()
     }
     

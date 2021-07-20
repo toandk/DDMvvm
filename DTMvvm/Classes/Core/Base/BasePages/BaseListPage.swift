@@ -58,7 +58,6 @@ open class BaseListPage: BasePage, UITableViewDataSource, UITableViewDelegate {
                 self?.onItemSelected(indexPath)
             }) => disposeBag
         getItemSource()?.collectionChanged
-            .debounce(.microseconds(300), scheduler: Scheduler.shared.mainScheduler)
             .subscribe(onNext: { [weak self] changeSet in
                 self?.onDataSourceChanged(changeSet)
             }) => disposeBag

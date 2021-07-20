@@ -60,7 +60,6 @@ open class CollectionView<VM: IListViewModel>: View<VM>, UICollectionViewDataSou
                 self?.onItemSelected(indexPath)
             }) => disposeBag
         viewModel?.itemsSource.collectionChanged
-            .debounce(.microseconds(300), scheduler: Scheduler.shared.mainScheduler)
             .subscribe(onNext: { [weak self] changeSet in
                 self?.onDataSourceChanged(changeSet)
             }) => disposeBag

@@ -239,12 +239,13 @@ class TPExampleMenuPageViewModel: ExampleMenuPageViewModel {
         var page: UIViewController?
         switch indexPath.row {
         case 0:
-//            let vm = SimpleListPageViewModel(model: cellViewModel.model)
+            let vm = SimpleListPageViewModel(model: cellViewModel.model)
+            page = XibListPage(viewModel: vm)
 //            page = SimpleListPage(viewModel: vm)
-            let vm = NonGenericTableViewModel(model: cellViewModel.model)
-            let vc = NonGenericTablePage(nibName: "NonGenericTablePage", bundle: nil)
-            vc.viewModel = vm
-            page = vc
+//            let vm = NonGenericTableViewModel(model: cellViewModel.model)
+//            let vc = NonGenericTablePage(nibName: "NonGenericTablePage", bundle: nil)
+//            vc.viewModel = vm
+//            page = vc
             
         case 1:
 //            let vm = SectionListPageViewModel(model: cellViewModel.model)

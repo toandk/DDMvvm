@@ -5,7 +5,7 @@ PODS:
   - Alamofire (5.2.2)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
-  - DTMvvm (1.6.7):
+  - DTMvvm (1.6.8):
     - Action
     - Alamofire
     - AlamofireImage
@@ -50,7 +50,7 @@ SPEC CHECKSUMS:
   Action: 79e6c5dc91e13eea045ab6744b3e5609086671aa
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  DTMvvm: f0f4a8b768944cb9b3373cc19b903f9424c9970b
+  DTMvvm: 6f69b747cf40e1e959dfc3070af88b305bb2b88d
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   PureLayout: bd3c4ec3a3819ad387c99ebb72c6b129c3ed4d2d

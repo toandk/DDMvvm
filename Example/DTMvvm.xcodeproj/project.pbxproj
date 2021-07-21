@@ -46,6 +46,9 @@
 		706AD0DB2317AD1D00610983 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 706AD0B42317AD1D00610983 /* LaunchScreen.xib */; };
 		706AD0DC2317AD1D00610983 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 706AD0B62317AD1D00610983 /* Images.xcassets */; };
 		706AD0DD2317AD1D00610983 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706AD0B72317AD1D00610983 /* AppDelegate.swift */; };
+		84D08E5626A7C29900E26280 /* XibListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D08E5426A7C29900E26280 /* XibListPage.swift */; };
+		84D08E5726A7C29900E26280 /* XibListPageContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84D08E5526A7C29900E26280 /* XibListPageContentView.xib */; };
+		84D08E6D26A7C47A00E26280 /* XibListPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D08E6C26A7C47A00E26280 /* XibListPageContentView.swift */; };
 		E5B14479246ABDECDE729C47 /* Pods_DTMvvm_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83717D9199C04ADEE86E76EB /* Pods_DTMvvm_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -109,6 +112,9 @@
 		706AD0B82317AD1D00610983 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		73F63E127F1073746AFF5EC0 /* Pods-DTMvvm_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DTMvvm_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DTMvvm_Tests/Pods-DTMvvm_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		83717D9199C04ADEE86E76EB /* Pods_DTMvvm_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DTMvvm_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84D08E5426A7C29900E26280 /* XibListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibListPage.swift; sourceTree = "<group>"; };
+		84D08E5526A7C29900E26280 /* XibListPageContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = XibListPageContentView.xib; sourceTree = "<group>"; };
+		84D08E6C26A7C47A00E26280 /* XibListPageContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XibListPageContentView.swift; sourceTree = "<group>"; };
 		DE3853135D3C2B785F6422D3 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		FBAB6B204F0970681DCF9099 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -278,6 +284,9 @@
 				706AD09C2317AD1D00610983 /* SectionHeaderView.swift */,
 				706AD09D2317AD1D00610983 /* SimpleListPageCell.swift */,
 				706AD09E2317AD1D00610983 /* SectionListPage.swift */,
+				84D08E5426A7C29900E26280 /* XibListPage.swift */,
+				84D08E6C26A7C47A00E26280 /* XibListPageContentView.swift */,
+				84D08E5526A7C29900E26280 /* XibListPageContentView.xib */,
 			);
 			path = TablePageExamples;
 			sourceTree = "<group>";
@@ -286,9 +295,9 @@
 			isa = PBXGroup;
 			children = (
 				706AD0A02317AD1D00610983 /* NonGenericTablePage.xib */,
+				706AD0A32317AD1D00610983 /* NonGenericTablePage.swift */,
 				706AD0A12317AD1D00610983 /* NonGenericSectionListPage.xib */,
 				706AD0A22317AD1D00610983 /* NonGenericSectionListPage.swift */,
-				706AD0A32317AD1D00610983 /* NonGenericTablePage.swift */,
 			);
 			path = NonGeneric;
 			sourceTree = "<group>";
@@ -436,6 +445,7 @@
 				706AD0CC2317AD1D00610983 /* NonGenericSectionListPage.xib in Resources */,
 				706AD0DC2317AD1D00610983 /* Images.xcassets in Resources */,
 				706AD0DB2317AD1D00610983 /* LaunchScreen.xib in Resources */,
+				84D08E5726A7C29900E26280 /* XibListPageContentView.xib in Resources */,
 				706AD0CB2317AD1D00610983 /* NonGenericTablePage.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -534,6 +544,7 @@
 				706AD0D32317AD1D00610983 /* FlickrModels.swift in Sources */,
 				706AD0D52317AD1D00610983 /* ContactModel.swift in Sources */,
 				706AD0B92317AD1D00610983 /* FlickrService.swift in Sources */,
+				84D08E6D26A7C47A00E26280 /* XibListPageContentView.swift in Sources */,
 				706AD0BF2317AD1D00610983 /* ContactEditPage.swift in Sources */,
 				706AD0C72317AD1D00610983 /* SectionListPageCells.swift in Sources */,
 				706AD0D22317AD1D00610983 /* NavigationTransitionExamplePage.swift in Sources */,
@@ -547,6 +558,7 @@
 				706AD0C92317AD1D00610983 /* SimpleListPageCell.swift in Sources */,
 				706AD0D42317AD1D00610983 /* ListPageModels.swift in Sources */,
 				706AD0C22317AD1D00610983 /* SectionCollectionPage.swift in Sources */,
+				84D08E5626A7C29900E26280 /* XibListPage.swift in Sources */,
 				706AD0BA2317AD1D00610983 /* FlickrAPI.swift in Sources */,
 				706AD0BB2317AD1D00610983 /* FlickrImageCell.swift in Sources */,
 				706AD0C62317AD1D00610983 /* SimpleListPage.swift in Sources */,

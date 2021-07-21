@@ -16,6 +16,9 @@ class XibListPage: ListPage<SimpleListPageViewModel> {
     override func addTableView() {
         view.addSubview(contentView)
         contentView.autoPinEdgesToSuperviewEdges()
+        tableView.backgroundColor = .lightGray
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     override var tableView: UITableView {

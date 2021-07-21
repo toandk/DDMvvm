@@ -46,6 +46,10 @@ class SimpleListPageViewModel: ListViewModel<Model, SimpleListPageCellViewModel>
         return Action() { .just(self.add()) }
     }()
     
+    override func react() {
+        add()
+    }
+    
     private func add() {
         let number = Int.random(in: 1000...10000)
         let title = "This is your random number: \(number)"

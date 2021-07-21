@@ -13,24 +13,24 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
     
     public typealias CVM = VM.CellViewModelElement
     
-    public let tableView: UITableView
+    lazy var _tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.backgroundColor = .clear
+        return tableView
+    }()
     
-    public init(viewModel: VM? = nil, style: UITableView.Style = .plain) {
-        tableView = UITableView(frame: .zero, style: style)
+    public override init(viewModel: VM? = nil) {
         super.init(viewModel: viewModel)
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        tableView = UITableView(frame: .zero, style: .plain)
         super.init(coder: aDecoder)
     }
     
     override open func viewDidLoad() {
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = .clear
-        view.addSubview(tableView)
-        
+        addTableView()
         super.viewDidLoad()
     }
     
@@ -40,12 +40,21 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
     }
     
     open override func initialize() {
-        tableView.autoPinEdgesToSuperviewEdges(with: .zero)
+        
     }
     
     open override func destroy() {
         super.destroy()
         tableView.removeFromSuperview()
+    }
+    
+    open func addTableView() {
+        view.addSubview(tableView)
+        tableView.autoPinEdgesToSuperviewEdges(with: .zero)
+    }
+    
+    open var tableView: UITableView {
+        return _tableView
     }
     
     /// Every time the viewModel changed, this method will be called again, so make sure to call super for ListPage to work

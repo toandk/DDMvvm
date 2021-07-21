@@ -13,7 +13,7 @@ open class CollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewDataSou
 
     public typealias CVM = VM.CellViewModelElement
 
-    public lazy var collectionView: UICollectionView = {
+    lazy var _collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
         collectionView.backgroundColor = .clear
         collectionView.dataSource = self
@@ -33,7 +33,7 @@ open class CollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewDataSou
     }
 
     override open func viewDidLoad() {
-        view.addSubview(collectionView)
+        addCollectionView()
         super.viewDidLoad()
     }
     
@@ -50,6 +50,15 @@ open class CollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewDataSou
         }, completion: nil)
     }
     
+    open func addCollectionView() {
+        view.addSubview(collectionView)
+        collectionView.autoPinEdgesToSuperviewEdges()
+    }
+    
+    open var collectionView: UICollectionView {
+        return _collectionView
+    }
+    
     /**
      Subclasses override this method to create its own collection view layout.
      
@@ -60,7 +69,7 @@ open class CollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewDataSou
     }
 
     open override func initialize() {
-        collectionView.autoPinEdgesToSuperviewEdges()
+        
     }
     
     open override func destroy() {

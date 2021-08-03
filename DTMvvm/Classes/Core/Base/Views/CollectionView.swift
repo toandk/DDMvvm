@@ -62,6 +62,7 @@ open class CollectionView<VM: IListViewModel>: View<VM>, UICollectionViewDataSou
         viewModel?.itemsSource.collectionChanged
             .subscribe(onNext: { [weak self] changeSet in
                 self?.onDataSourceChanged(changeSet)
+                self?.dataSourceDidChanged()
             }) => disposeBag
     }
     
@@ -75,6 +76,8 @@ open class CollectionView<VM: IListViewModel>: View<VM>, UICollectionViewDataSou
         viewModel.selectedItemDidChange(cellViewModel)
         selectedItemDidChange(cellViewModel)
     }
+    
+    open func dataSourceDidChanged() {}
     
     private func onDataSourceChanged(_ changeSet: ChangeSet) {
         if !changeSet.animated || (changeSet.type == .reload && collectionView.numberOfSections == 0) {
@@ -206,4 +209,17 @@ open class CollectionView<VM: IListViewModel>: View<VM>, UICollectionViewDataSou
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
+    open func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {}
+    
+    open func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {}
+    
+    open func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {}
+    
+    open func scrollViewDidScroll(_ scrollView: UIScrollView) {}
+    
+    open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {}
+    
+    open func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {}
+    
 }

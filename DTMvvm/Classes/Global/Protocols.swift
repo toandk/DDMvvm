@@ -91,8 +91,6 @@ public protocol IGenericViewModel: IDestroyable, Equatable {
 /// Base ViewModel type for Page (UIViewController), View (UIVIew)
 public protocol IViewModel: IGenericViewModel {
     var rxViewState: BehaviorRelay<ViewState> { get }
-    var rxShowLocalHud: BehaviorRelay<Bool> { get }
-    
     var navigationService: INavigationService { get }
 }
 

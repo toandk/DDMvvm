@@ -28,7 +28,6 @@ extension Reactive where Base: IView {
 open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
     
     public var disposeBag: DisposeBag? = DisposeBag()
-    private var hudBag: DisposeBag? = DisposeBag()
     
     public var animatorDelegate: AnimatorDelegate?
     
@@ -51,9 +50,6 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
     }
     
     public private(set) var backButton: UIBarButtonItem?
-    public private(set) var localHud: LocalHud? {
-        didSet { bindLocalHud() }
-    }
     
     private lazy var backAction: Action<Void, Void> = {
         return Action() { .just(self.onBack()) }
@@ -87,13 +83,6 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
-        // setup default local hud
-        let localHud = localHudFactory().create()
-        view.addSubview(localHud)
-        localHud.setupView()
-        self.localHud = localHud
-        
         initialize()
         viewModelChanged()
     }
@@ -120,15 +109,6 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
         if isMovingFromParent {
             destroy()
         }
-    }
-    
-    /**
-     Subclasses override this method to create its own hud loader.
-     
-     This method allows subclasses to create custom hud loader. To create the default hud loader, use global configurations `DDConfigurations.localHudFactory`
-     */
-    open func localHudFactory() -> Factory<LocalHud> {
-        return DDConfigurations.localHudFactory
     }
     
     /**
@@ -159,16 +139,10 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
     open func bindViewAndViewModel() {}
     
     /**
-     Subclasses override this method to do custom actions when hud loader view is toggle (hidden/shown).
-     */
-    open func localHudToggled(_ value: Bool) {}
-    
-    /**
      Subclasses override this method to remove all things related to `DisposeBag`.
      */
     open func destroy() {
         disposeBag = DisposeBag()
-        hudBag = DisposeBag()
         viewModel?.destroy()
     }
     
@@ -181,18 +155,7 @@ open class Page<VM: IViewModel>: UIViewController, IView, ITransitionView {
         navigationService.pop()
     }
     
-    private func bindLocalHud() {
-        hudBag = DisposeBag()
-        
-        if let viewModel = viewModel, let localHud = localHud {
-            let shared = viewModel.rxShowLocalHud.distinctUntilChanged()
-            shared ~> localHud.rx.show => hudBag
-            shared.subscribe(onNext: localHudToggled) => hudBag
-        }
-    }
-    
     private func viewModelChanged() {
-        bindLocalHud()
         bindViewAndViewModel()
         (_viewModel as? IReactable)?.reactIfNeeded()
     }

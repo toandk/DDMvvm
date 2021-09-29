@@ -63,10 +63,6 @@ open class BaseListPage: BasePage, UITableViewDataSource, UITableViewDelegate {
             }) => disposeBag
     }
     
-    open override func localHudToggled(_ value: Bool) {
-        tableView.isHidden = value
-    }
-    
     private func onItemSelected(_ indexPath: IndexPath) {
         guard let itemsSource = getItemSource() else { return }
         if let cellViewModel = itemsSource.element(atIndexPath: indexPath) {

@@ -60,10 +60,6 @@ open class ListPage<VM: IListViewModel>: Page<VM>, UITableViewDataSource, UITabl
             }) => disposeBag
     }
     
-    open override func localHudToggled(_ value: Bool) {
-        tableView.isHidden = value
-    }
-    
     private func onItemSelected(_ indexPath: IndexPath) {
         guard let viewModel = self.viewModel else { return }
         let cellViewModel = viewModel.itemsSource[indexPath.row, indexPath.section]

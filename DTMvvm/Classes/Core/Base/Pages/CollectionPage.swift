@@ -68,10 +68,6 @@ open class CollectionPage<VM: IListViewModel>: Page<VM>, UICollectionViewDataSou
         collectionView.removeFromSuperview()
     }
 
-    open override func localHudToggled(_ value: Bool) {
-        collectionView.isHidden = value
-    }
-
     /// Every time the viewModel changed, this method will be called again, so make sure to call super for CollectionPage to work
     open override func bindViewAndViewModel() {
         collectionView.rx.itemSelected.asObservable()

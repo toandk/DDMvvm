@@ -14,7 +14,6 @@ import PureLayout
 open class BasePage: UIViewController, ITransitionView {
     
     public var disposeBag: DisposeBag? = DisposeBag()
-    private var hudBag: DisposeBag? = DisposeBag()
     
     public var animatorDelegate: AnimatorDelegate?
     
@@ -60,15 +59,6 @@ open class BasePage: UIViewController, ITransitionView {
     }
     
     /**
-     Subclasses override this method to create its own hud loader.
-     
-     This method allows subclasses to create custom hud loader. To create the default hud loader, use global configurations `DDConfigurations.localHudFactory`
-     */
-    open func localHudFactory() -> Factory<LocalHud> {
-        return DDConfigurations.localHudFactory
-    }
-    
-    /**
      Subclasses override this method to create its own back button on navigation bar.
      
      This method allows subclasses to create custom back button. To create the default back button, use global configurations `DDConfigurations.backButtonFactory`
@@ -96,11 +86,6 @@ open class BasePage: UIViewController, ITransitionView {
     open func bindViewAndViewModel() {}
     
     /**
-     Subclasses override this method to do custom actions when hud loader view is toggle (hidden/shown).
-     */
-    open func localHudToggled(_ value: Bool) {}
-    
-    /**
      Subclasses override this method to remove all things related to `DisposeBag`.
      */
     open func destroy() {
@@ -123,7 +108,6 @@ open class BasePage: UIViewController, ITransitionView {
     
     private func cleanUp() {
         disposeBag = nil
-        hudBag = nil
     }
     
     func updateAfterViewModelChanged() {
